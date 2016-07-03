@@ -1,0 +1,6 @@
+myfirstmodule.myfirstmodulepage:
+  title: Books
+  description: 'Manage your site''s book outlines.'
+  parent: system.admin_structure
+  route_name: myfirstmodule.myfirstmodulepage
+
