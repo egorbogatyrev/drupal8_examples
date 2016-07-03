@@ -1,0 +1,6 @@
+myfirstmodule.myfirstmodulepage:
+  path: '/myfirstmodule'
+  defaults:
+    _controller: '\Drupal\myfirstmodule\Controller\MyFirstModuleController::sayHello'
+  requirements:
+    _permission: 'access content'

@@ -1,0 +1,6 @@
+name: My first module
+description: My first module in the Drupal 8
+type: module
+core: 8.x
+varsion: 1.0
+package: Examples
