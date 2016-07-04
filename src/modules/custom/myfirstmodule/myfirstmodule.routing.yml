@@ -4,3 +4,11 @@ myfirstmodule.myfirstmodulepage:
     _controller: '\Drupal\myfirstmodule\Controller\MyFirstModuleController::sayHello'
   requirements:
     _permission: 'access content'
+
+myfirstmodule.myfirstmoduleform:
+ path: '/myfirstform'
+ defaults:
+   _form: '\Drupal\myfirstmodule\Form\MyFirstModuleForm'
+   _title: 'The test drupal 8 form'
+ requirements:
+   _permission: 'access content'
