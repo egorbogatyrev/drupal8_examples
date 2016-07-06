@@ -1,0 +1,9 @@
+name: Module for lesson 3
+description: Module with functioanlity in accordance to lesson 3
+type: module
+core: 8.x
+version: 1.0
+package: Drupal School
+dependencies:
+  - block
+configure: admin/structure/block
