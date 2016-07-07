@@ -1,0 +1,9 @@
+parameters:
+  lesson3.apiurl: http://www.nbrb.by/API/ExRates/Rates
+  lesson3.ondate: 01/31/2011
+  lesson3.periodicity: 0
+
+services:
+  lesson3.currencies_service:
+    class: Drupal\lesson3\Services\Lesson3CurrenciesService
+    arguments: ['%lesson3.apiurl%', '%lesson3.ondate%', '%lesson3.periodicity%']

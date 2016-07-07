@@ -27,7 +27,8 @@ class Lesson3Block extends BlockBase {
   public function defaultConfiguration() {
     return [
       'label_display' => FALSE,
-      'lesson3_desc' => $this->t('Default description of block'),
+      'lesson3_desc'  => '',
+      'currencies'    => [],
     ];
   }
 
@@ -35,7 +36,10 @@ class Lesson3Block extends BlockBase {
    * {@inheritdoc}
    */
   public function build() {
-    return ['#markup' => $this->t('Simple block from Lesson 3')];
+    $service = \Drupal::service('lesson3.currencies_service');
+    $output['description']['#markup'] = $this->configuration['lesson3_desc'];
+    $output['currencies'] = $service->getCurrenciesTable($this->configuration['currencies']);
+    return $output;
   }
 
   /**
@@ -45,9 +49,20 @@ class Lesson3Block extends BlockBase {
     $form['lesson3_desc'] = [
       '#type' => 'textarea',
       '#title' => t('Description of custom block'),
-      '#description' => $this->t('This this a block description.'),
+      '#description' => $this->t('This this a block description. Wiil be added in the top of block after title.'),
       '#default_value' => $this->configuration['lesson3_desc'],
     ];
+
+    $service = \Drupal::service('lesson3.currencies_service');
+    $form['currencies'] = [
+      '#type' => 'select',
+      '#multiple' => TRUE,
+      '#default_value' => $this->configuration['currencies'],
+      '#options' => $service->getCurrenciesList(),
+      '#title' => $this->t('Currencies'),
+      '#required' => TRUE,
+    ];
+
     return $form;
   }
 
@@ -56,5 +71,6 @@ class Lesson3Block extends BlockBase {
    */
   public function blockSubmit($form, FormStateInterface $form_state) {
     $this->configuration['lesson3_desc'] = $form_state->getValue('lesson3_desc');
+    $this->configuration['currencies'] = $form_state->getValue('currencies');
   }
 }
