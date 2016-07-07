@@ -35,7 +35,32 @@ class Lesson3Block extends BlockBase {
    * {@inheritdoc}
    */
   public function build() {
-    return ['#markup' => $this->t('Simple block from Lesson 3')];
+    // Example query.
+    $header_0 = array(
+      array('data' => 'wid'),
+      array('data' => 'type'),
+      array('data' => 'timestamp'),
+    );
+    $query_0 = db_select('watchdog', 'd')->extend('Drupal\Core\Database\Query\PagerSelectExtender')->element(0);
+    $query_0->fields('d', array('wid', 'type', 'timestamp'));
+    $result_0 = $query_0
+      ->limit(5)
+      ->orderBy('d.wid')
+      ->execute();
+    $rows_0 = array();
+    foreach ($result_0 as $row) {
+      $rows_0[] = array('data' => (array) $row);
+    }
+    $build['pager_table_0'] = array(
+      '#theme' => 'table',
+      '#header' => $header_0,
+      '#rows' => $rows_0,
+      '#empty' => $this->t("There are no watchdog records found in the db"),
+    );
+    
+    
+    $service = \Drupal::service('lesson3.currencies_service');
+    return ['#markup' => $service->getCurrencies()];
   }
 
   /**
