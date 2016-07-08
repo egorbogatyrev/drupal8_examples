@@ -6,7 +6,7 @@ interface Lesson3CurrenciesServiceInterface {
   /**
    * Lesson3CurrenciesServiceInterface constructor.
    */
-  public function __construct($url, $onDate, $periodicity);
+  public function __construct($url, $periodicity);
 
   /**
    * Get currencies method.

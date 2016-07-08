@@ -14,7 +14,7 @@ class Lesson3CurrenciesService implements Lesson3CurrenciesServiceInterface{
   // The url of API NBRB.
   protected $apiUrl;
   // The date of currencies.
-  protected $onDate;
+  protected $onDate = '2011-01-31';
   // Periodicity (monthly or daily).
   protected $periodicity;
   // Http response variable. Stores info returned by service.
@@ -23,9 +23,8 @@ class Lesson3CurrenciesService implements Lesson3CurrenciesServiceInterface{
   /**
    * Lesson3CurrenciesService constructor.
    */
-  public function __construct($url, $onDate, $periodicity) {
+  public function __construct($url, $periodicity) {
     $this->apiUrl = $url;
-    $this->onDate = date('Y-m-d', $onDate);
     $this->periodicity = $periodicity;
     $this->httpResponse = $this->sendHttpRequest();
   }

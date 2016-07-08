@@ -1,6 +1,6 @@
-myfirstmodule.myfirstmodulepage:
+lesson3.currencies:
   path: '/currencies'
   defaults:
-    _controller: '\Drupal\lesson3\Controller\Lesson3Controller::outputCurrencies()'
+    _controller: '\Drupal\lesson3\Controller\Lesson3Controller::outputCurrencies'
   requirements:
     _permission: 'access content'
