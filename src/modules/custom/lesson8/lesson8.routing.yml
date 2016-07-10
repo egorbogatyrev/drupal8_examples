@@ -1,0 +1,7 @@
+lesson8.logging:
+  path: '/logging'
+  defaults:
+   _form: '\Drupal\lesson8\Form\Lesson8Form'
+   _title: 'Example for logging'
+  requirements:
+    _permission: 'TRUE'

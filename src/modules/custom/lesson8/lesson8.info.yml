@@ -1,0 +1,6 @@
+name: Module for lesson 8
+description: Includes examples for logging, cache and migration.
+type: module
+core: 8.x
+version: 1.0
+package: Drupal School
