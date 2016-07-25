@@ -46,21 +46,8 @@ class Lesson8Form extends FormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $message = $form_state->getValue('message');
-//    drupal_set_message($message);
-
-    \Drupal::service('lesson8.logger')->error($message);
 
     \Drupal::service('lesson8.service_to_log_to_multiple_channels')->logToOtherChannels($message);
-
-    // Send message to log.
-//    \Drupal::logger('lesson8')->emergency($message);
-//    \Drupal::logger('lesson8')->alert($message);
-//    \Drupal::logger('lesson8')->critical($message);
-//    \Drupal::logger('lesson8')->error($message);
-//    \Drupal::logger('lesson8')->warning($message);
-//    \Drupal::logger('lesson8')->notice($message);
-//    \Drupal::logger('lesson8')->info($message);
-//    \Drupal::logger('lesson8')->debug($message);
   }
 }
 

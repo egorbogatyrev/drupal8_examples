@@ -11,14 +11,19 @@ namespace Drupal\lesson8;
  */
 class Lesson8Service {
 
-  protected $factory;
-
+  /**
+   * Lesson8Service constructor.
+   *
+   * @param $factory
+   */
   public function __construct($factory) {
     $this->loggerFactory = $factory;
   }
 
   public function logToOtherChannels($message) {
+    // Send a log message using lesson8 channel.
     $this->loggerFactory->get('lesson8')->notice($message);
-//    $this->loggerFactory->get('system')->error($message);
+    // Send a log message using system channel.
+    $this->loggerFactory->get('system')->error($message);
   }
 }
