@@ -1,0 +1,26 @@
+id: lesson8
+label: Example migration for lesson8
+migration_group: lesson8_group
+migration_tags:
+  - Drupal 7
+source:
+  plugin: embedded_data
+  data_rows:
+    -
+      id: 1
+      title: 'Block #1 for Lesson 8'
+      body: 'Stub description here for block #1'
+  ids:
+    entity_type:
+      type: integer
+  process:
+    type:
+      plugin: default_value
+      default_value: basic
+    info: title
+    body/value: body
+    body/format:
+      plugin: default_value
+      default_value: full_html
+  destination:
+    plugin: entity:block_content
