@@ -1,19 +1,4 @@
 services:
-  lesson8.logger:
-    class: Drupal\lesson8\Logger\Lesson8Logger
-    tags:
-      - { name: logger }
-
   lesson8.service_to_log_to_multiple_channels:
     class: Drupal\lesson8\Lesson8Service
     arguments: ['@logger.factory']
-
-#  lesson8.channel.lesson8:
-#    parent: logger.channel_base
-#    arguments: lesson8
-#
-#  lesson8.logger:
-#      class: Drupal\lesson8\Logger
-##      factory: logger.factory:get
-#      arguments: ['@lesson8.channel.lesson8']
-

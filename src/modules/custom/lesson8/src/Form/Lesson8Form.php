@@ -47,6 +47,8 @@ class Lesson8Form extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $message = $form_state->getValue('message');
 
+//    \Drupal::service('lesson8.logger')->log(RfcLogLevel::CRITICAL, $message);
+
     \Drupal::service('lesson8.service_to_log_to_multiple_channels')->logToOtherChannels($message);
   }
 }
