@@ -2,6 +2,6 @@ lesson8.logging:
   path: '/logging'
   defaults:
    _form: '\Drupal\lesson8\Form\Lesson8Form'
-   _title: 'Example for logging'
+   _title: 'Logging & cache'
   requirements:
     _permission: 'TRUE'

@@ -2,3 +2,11 @@ services:
   lesson8.service_to_log_to_multiple_channels:
     class: Drupal\lesson8\Lesson8Service
     arguments: ['@logger.factory']
+
+
+  cache.lesson8:
+    class: Drupal\Core\Cache\CacheBackendInterface
+    tags:
+      - { name: cache.bin }
+    factory: cache_factory:get
+    arguments: [lesson8]
