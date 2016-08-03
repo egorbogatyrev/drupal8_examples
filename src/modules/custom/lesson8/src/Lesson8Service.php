@@ -22,8 +22,8 @@ class Lesson8Service {
 
   public function logToOtherChannels($message) {
     // Send a log message using lesson8 channel.
-    $this->loggerFactory->get('lesson8')->notice($message);
+    $this->loggerFactory->get('lesson8')->emergency($message);
     // Send a log message using system channel.
-    $this->loggerFactory->get('system')->error($message);
+    $this->loggerFactory->get('mytype')->warning($message);
   }
 }

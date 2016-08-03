@@ -98,4 +98,3 @@ class Lesson8Form extends FormBase {
     drupal_get_messages();
   }
 }
-
