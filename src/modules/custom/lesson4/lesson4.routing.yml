@@ -1,0 +1,7 @@
+lesson8.logging:
+  path: '/lesson4'
+  defaults:
+   _form: '\Drupal\lesson8\Form\Lesson4Form'
+   _title: 'Custom page for lesson 4'
+  requirements:
+    _permission: 'TRUE'
