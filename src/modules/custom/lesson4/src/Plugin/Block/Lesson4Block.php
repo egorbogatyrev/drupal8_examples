@@ -5,7 +5,7 @@ namespace \Drupal\lesson4\Plugin\Block;
 use \Drupal\Core\Block\BlockBase;
 
 /**
- * Class Lesson4Block
+ * Class Lesson4Block.
  *
  * @Block(
  *   id = "lesson4block",
@@ -13,10 +13,15 @@ use \Drupal\Core\Block\BlockBase;
  * )
  */
 class Lesson4Block extends BlockBase {
+
   /**
    * {@inheritdoc}
    */
   public function build() {
-    // TODO: Implement build() method.
+    $output = [
+      '#markup' => t('Render array example'),
+    ];
+    return $output;
   }
+
 }

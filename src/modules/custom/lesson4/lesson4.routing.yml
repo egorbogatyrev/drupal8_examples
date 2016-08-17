@@ -1,7 +1,7 @@
-lesson8.logging:
+lesson4.example_page:
   path: '/lesson4'
   defaults:
-   _form: '\Drupal\lesson8\Form\Lesson4Form'
+   _controller: '\Drupal\lesson4\Controller\Lesson4Controller::pageOutput'
    _title: 'Custom page for lesson 4'
   requirements:
     _permission: 'TRUE'
