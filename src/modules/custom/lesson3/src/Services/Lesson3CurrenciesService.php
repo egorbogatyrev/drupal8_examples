@@ -1,16 +1,16 @@
 <?php
-/**
- * @file
- * Contains ...
- */
+
 namespace Drupal\lesson3\Services;
 
+use GuzzleHttp\Client;
+
 /**
- * Class Lesson3CurrenciesService
+ * Class Lesson3CurrenciesService.
  *
  * @package Drupal\lesson3\Services
  */
-class Lesson3CurrenciesService implements Lesson3CurrenciesServiceInterface{
+class Lesson3CurrenciesService implements Lesson3CurrenciesServiceInterface {
+
   // The url of API NBRB.
   protected $apiUrl;
   // The date of currencies.
@@ -38,11 +38,13 @@ class Lesson3CurrenciesService implements Lesson3CurrenciesServiceInterface{
    * @return mixed|\Psr\Http\Message\ResponseInterface
    */
   protected function sendHttpRequest($method = 'GET') {
-    $guzzle = new \GuzzleHttp\Client();
-    $response = $guzzle->request($method, $this->apiUrl, ['query' => [
-      'onDate' => $this->getCurrenciesDate(),
-      'Periodicity' => $this->periodicity,
-    ]]);
+    $guzzle = new Client();
+    $response = $guzzle->request($method, $this->apiUrl, [
+      'query' => [
+        'onDate' => $this->getCurrenciesDate(),
+        'Periodicity' => $this->periodicity,
+      ],
+    ]);
     return json_decode($response->getBody(), TRUE);
   }
 
@@ -103,4 +105,5 @@ class Lesson3CurrenciesService implements Lesson3CurrenciesServiceInterface{
     }
     return $output;
   }
+
 }
