@@ -1,0 +1,8 @@
+lesson4-library:
+  vesrion: 1.x
+  css:
+    css/lesson4.css: {}
+  js:
+    js/lesson4.js: {}
+  dependencies:
+    - core/jquery

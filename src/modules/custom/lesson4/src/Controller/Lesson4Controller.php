@@ -17,6 +17,13 @@ class Lesson4Controller extends ControllerBase {
   public function pageOutput() {
     return [
       '#markup' => t('This is the test page'),
+      '#prefix' => '<span class="lesson4">',
+      '#suffix' => '</span>',
+      '#attached' => [
+        'library' => [
+          'lesson4/lesson4-library',
+        ],
+      ],
     ];
   }
 
