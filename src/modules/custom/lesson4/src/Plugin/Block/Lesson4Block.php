@@ -1,6 +1,6 @@
 <?php
 
-namespace \Drupal\lesson4\Plugin\Block;
+namespace Drupal\lesson4\Plugin\Block;
 
 use \Drupal\Core\Block\BlockBase;
 
