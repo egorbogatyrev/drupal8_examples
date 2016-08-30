@@ -5,3 +5,10 @@ lesson4.example_page:
    _title: 'Custom page for lesson 4'
   requirements:
     _permission: 'TRUE'
+
+lesson4.response_callback_one:
+  path: '/lesson4/response-one'
+  defaults:
+    _controller: '\Drupal\lesson4\Controller\Lesson4Controller::sendResponse'
+  requirements:
+    _permission: 'TRUE'

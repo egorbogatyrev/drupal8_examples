@@ -3,6 +3,7 @@
 namespace Drupal\lesson4\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class Lesson4Controller.
@@ -25,6 +26,23 @@ class Lesson4Controller extends ControllerBase {
         ],
       ],
     ];
+  }
+
+  /**
+   * Sends the response.
+   *
+   * @return \Symfony\Component\HttpFoundation\Response
+   *   Response object.
+   */
+  public function sendResponse() {
+    $response = new Response(
+      'Content',
+      Response::HTTP_OK,
+      array('content-type' => 'text/html')
+    );
+    $response->setContent('Lesson 4 Response example');
+
+    return $response;
   }
 
 }
