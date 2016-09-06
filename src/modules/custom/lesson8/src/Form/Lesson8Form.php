@@ -1,17 +1,13 @@
 <?php
 
-/**
- * @file
- *
- */
-
 namespace Drupal\lesson8\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Class Lesson8FormController
+ * Class Lesson8FormController.
+ *
  * @package Drupal\lesson8\Form
  */
 class Lesson8Form extends FormBase {
@@ -97,4 +93,5 @@ class Lesson8Form extends FormBase {
     \Drupal::cache('lesson8')->delete($this::LESSON8_CID);
     drupal_get_messages();
   }
+
 }
