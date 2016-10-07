@@ -1,0 +1,9 @@
+.node-css-even {
+  padding: 2px;
+  background: rgba(255, 33, 60, 0.57);
+}
+
+.node-css-odd {
+  padding: 5px;
+  background: rgba(99, 189, 255, 0.57);
+}
