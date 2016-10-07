@@ -2,7 +2,7 @@ name: Egor Bogatyrev (lesson 5)
 type: theme
 base theme: bartik
 description: 'Homework for lesson 5.'
-screenshot: 'images/screenshot.jpg'
+screenshot: '/images/screenshot.jpg'
 
 libraries:
   - egor_bogatyrev/title
