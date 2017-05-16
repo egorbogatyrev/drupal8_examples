@@ -3,3 +3,21 @@ news.news_settings:
   parent: system.admin_config_services
   description: 'Configure the news settings, choose news vendors.'
   route_name: news.news_settings
+
+news.example_link:
+  title: MYMODULE link
+  description: MYMODULE link description
+  route_name: news.news_settings
+#  class: \Drupal\lesson3\Controller\Lesson3Controller
+#  form_class: Drupal\Core\Menu\Form\MenuLinkDefaultForm
+#  deriver: \Drupal\views\Plugin\Derivative\ViewsMenuLink
+  weight: 100
+  parent: system.admin_config
+  enabled: 1
+  position: left
+  expanded: TRUE
+  rout_parameters: {arg : 'newvalue'}
+  menu_name: main
+  options:
+    attributes:
+      target: _blank

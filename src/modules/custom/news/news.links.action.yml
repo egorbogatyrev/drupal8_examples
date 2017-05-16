@@ -1,0 +1,6 @@
+news.local_action:
+  route_name: news.news_settings
+  title: 'Example action link'
+  appears_on:
+    - news.news_settings
+    - system.site_information_settings

@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * Implements hook_menu_links_discovered_alter().
+ */
+function news_menu_links_discovered_alter(&$links) {
+//  $links['system.admin_config']['expanded'] = TRUE;
+}
+
+/**
+ * Implements hook_menu_local_tasks_alter().
+ */
+function news_menu_local_tasks_alter(&$data, $route_name) {
+  $a = 1;
+}
+
+/**
+ * Implements hook_contextual_links_alter().
+ */
+function news_contextual_links_alter(array &$links, $group, array $route_parameters) {
+  if (isset($links['news.contextual_link2'])) {
+    $links['news.contextual_link2']['route_parameters'] = [
+      'key' => 'example',
+    ];
+//    $links['news.contextual_link2']['localized_options']['attributes'] = [
+//      'css' => ['one', 'two'],
+//    ];
+  }
+}
+
+/**
+ * Implements hook_contextual_links_view_alter().
+ */
+function news_contextual_links_view_alter(&$element, $items) {
+  $element['#attributes']['class'][] = 'one';
+}

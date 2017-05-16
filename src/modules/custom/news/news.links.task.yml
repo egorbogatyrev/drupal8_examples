@@ -1,0 +1,17 @@
+news.example_tab:
+  route_name: news.news_settings
+  title: 'My example tab 1'
+  base_route: news.example_tab
+  weight: 1
+
+news.example_tab_1:
+  route_name: dblog.overview
+  title: 'My example tab 2'
+  base_route: news.example_tab
+  weight: 2
+
+#news.example_tab_2:
+#  route_name: user.admin_permissions
+#  title: 'My example tab 3'
+#  base_route: news.example_tab
+#  weight: 3

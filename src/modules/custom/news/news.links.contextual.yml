@@ -1,0 +1,29 @@
+news.example_contextual_link:
+  title: 'MYMODULE contextual node link'
+  route_name: system.admin_content
+  group: 'node'
+  options:
+    attributes:
+      target: _blank
+
+news.contextual_link:
+  title: 'MYMODULE contextual link'
+  route_name: dblog.overview
+  group: 'block'
+  options:
+    attributes:
+      target: _blank
+
+news.contextual_link2:
+  title: 'My Contextual link'
+  route_name: news.news_settings2
+    class: \Drupal\lesson3\Controller\Lesson3Controller
+  #  form_class: Drupal\Core\Menu\Form\MenuLinkDefaultForm
+  #  deriver: \Drupal\views\Plugin\Derivative\ViewsMenuLink
+#  route_parameters: ['ooooo']
+#    - key: 'example'
+  group: 'node'
+  options:
+    attributes:
+      css: ['one', 'two', '3242342']
+    query: 'awaawawa'

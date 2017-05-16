@@ -1,7 +1,7 @@
 news.news_settings:
   path: '/admin/config/services/news'
   defaults:
-    _controller: '\Drupal\news\Controller\NewsSettingsController::getSettingsPage'
+    _form: 'Drupal\news\Form\NewsSettingsForm'
     _title: 'News'
   requirements:
     _permission: 'administer content'
