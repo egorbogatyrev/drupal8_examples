@@ -13,7 +13,9 @@ class NewsSettingsController {
    * Returns settings page.
    */
   public function getSettingsPage() {
-    return [];
+    $service = \Drupal::service('news.sources');
+    $sources = $service->get();
+    return $sources;
   }
 
 }

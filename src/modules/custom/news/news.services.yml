@@ -1,0 +1,7 @@
+parameters:
+  url: 'https://newsapi.org/v1/sources'
+
+services:
+  news.sources:
+    class: Drupal\news\Services\NewsSources
+    arguments: ['%url%']

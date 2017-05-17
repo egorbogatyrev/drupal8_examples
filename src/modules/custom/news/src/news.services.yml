@@ -1,3 +1,0 @@
-services:
-  app.mysperservice:
-    class: Drupal\locale\LocaleDefaultConfigStorage
