@@ -2,8 +2,7 @@
 
 namespace Drupal\news\Services;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use GuzzleHttp\Client;
 
 /**
  * Class NewsSources.
@@ -30,16 +29,10 @@ class NewsSources {
    * Returns the list of news sources.
    */
   public function get() {
-    $request = Request::create(
-      'https://www.google.com/',
-      'GET',
-      array('q' => 'drupal%208')
-    );
-
-//    $request = Request::create($this->url, 'GET');
-    $response = new Response($request->getContent(), Response::HTTP_OK, ['content-type' => 'application/json']);
-    $response->prepare($request);
-    return $response->send();
+    $client = new Client();
+    $request = $client->request('GET', $this->url);
+    $request = \GuzzleHttp\json_decode($request->getBody());
+    return $request->sources;
   }
 
 }

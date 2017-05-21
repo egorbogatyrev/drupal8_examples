@@ -14,8 +14,7 @@ class NewsSettingsController {
    */
   public function getSettingsPage() {
     $service = \Drupal::service('news.sources');
-    $sources = $service->get();
-    return $sources;
+    return ['#markup' => '<pre>' . json_encode($service->get(), JSON_PRETTY_PRINT) . '</pre>'];
   }
 
 }
