@@ -3,6 +3,7 @@
 namespace Drupal\news\Form;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageInterface;
@@ -60,6 +61,14 @@ class NewsSettingsForm extends ConfigFormBase {
       '#type' => 'date',
       '#title' => $this->t('Date'),
     ];
+    $form['datetime'] = [
+      '#type' => 'datetime',
+      '#title' => $this->t('Date time'),
+      '#date_increment' => 20,
+      '#date_timezone' => drupal_get_user_timezone(),
+      '#date_year_range' => '2010:+3',
+      '#default_value' => new DrupalDateTime(),
+    ];
     $form['url'] = [
       '#type' => 'url',
       '#title' => $this->t('Url'),
@@ -81,7 +90,25 @@ class NewsSettingsForm extends ConfigFormBase {
       '#type' => 'html_tag',
       '#tag' => 'hr',
     ];
+    // ________________________________________________________________________.
     // New other elements.
+    $form['datelist'] = [
+      '#type' => 'datelist',
+      '#title' => $this->t('Date list'),
+      '#default_value' => new DrupalDateTime(),
+      '#date_part_order' => [
+        'day',
+        'month',
+        'year',
+        'hour',
+        'minute',
+        'second',
+        'ampm',
+      ],
+      '#date_text_parts' => ['year'],
+      '#date_year_range' => '2010:2020',
+      '#date_increment'  => 10,
+    ];
     $form['color'] = [
       '#type' => 'color',
       '#title' => $this->t('Color'),
@@ -153,22 +180,34 @@ class NewsSettingsForm extends ConfigFormBase {
     $form['page'] = [
       '#type' => 'page',
       '#show_messages' => FALSE,
-      'content' => 'THIS IS PAGE',
+      'content' => ['#markup' => 'THIS IS PAGE'],
     ];
 
     $form['status_messages'] = [
       '#type' => 'status_messages',
     ];
 
+    \Composer\Autoload\includeFile('core/includes/install.inc');
+    $requirements['update'] = [
+      'title' => t('Database updates'),
+      'value' => t('Updates required'),
+      'severity' => REQUIREMENT_WARNING,
+      'description' => t('Contrib modules are not up to date.'),
+    ];
+    $requirements['entity_update'] = [
+      'title' => t('Entity/field definitions'),
+      'value' => t('Security updates required'),
+      'severity' => REQUIREMENT_ERROR,
+      'description' => t('Entity/field have security updates.'),
+    ];
     $form['status_report'] = [
       '#type' => 'status_report',
-      '#requirements' => 'djasjdlkajsdljsalkl',
+      '#requirements' => $requirements,
       '#prefix' => $this->t('status_report'),
     ];
 
     $form['system_compact_link'] = [
       '#type' => 'system_compact_link',
-      '#title' => $this->t('system_compact_link'),
     ];
 
     return $form;
