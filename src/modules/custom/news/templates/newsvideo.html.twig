@@ -1,0 +1,16 @@
+{#
+/**
+ * @file
+ * Default theme implementation for the MymoduleVideo.
+ *
+ * @see template_preprocess_newsvideo()
+ *
+ * @ingroup themeable
+ */
+#}
+<video {{ attributes }}>
+  {% for src, type in sources %}
+    <source src="{{ src }}" type="{{ type }}">
+  {% endfor %}
+  {{ text }}
+</video>

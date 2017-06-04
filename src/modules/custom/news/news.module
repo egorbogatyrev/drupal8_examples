@@ -1,5 +1,7 @@
 <?php
 
+use Drupal\Core\Template\Attribute;
+
 /**
  * Implements hook_menu_links_discovered_alter().
  */
@@ -33,4 +35,33 @@ function news_contextual_links_alter(array &$links, $group, array $route_paramet
  */
 function news_contextual_links_view_alter(&$element, $items) {
   $element['#attributes']['class'][] = 'one';
+}
+
+
+/**
+ * Implements hook_theme().
+ */
+function news_theme($existing, $type, $theme, $path) {
+  $items['newsvideo'] = [
+    'render element' => 'element',
+  ];
+
+  return $items;
+}
+
+/**
+ * Prepares variables for administration toolbar templates.
+ *
+ * Default template: newsvideo.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - element: An associative array containing the properties and children of
+ *     the tray. Properties used: #children, #attributes and #bar.
+ */
+function template_preprocess_newsvideo(&$variables) {
+  $element = $variables['element'];
+  $variables['attributes'] = new Attribute($element['#attributes']);
+  $variables['sources'] = $element['#sources'];
+  $variables['text'] = !empty($element['#novideo']) ? $element['#novideo']->render() : '';
 }

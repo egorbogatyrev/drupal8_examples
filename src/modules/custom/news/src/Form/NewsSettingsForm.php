@@ -8,6 +8,7 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Url;
+use Composer\Autoload;
 
 /**
  * Class NewsSettingsForm.
@@ -187,7 +188,7 @@ class NewsSettingsForm extends ConfigFormBase {
       '#type' => 'status_messages',
     ];
 
-    \Composer\Autoload\includeFile('core/includes/install.inc');
+    include_once DRUPAL_ROOT . '/core/includes/install.inc';
     $requirements['update'] = [
       'title' => t('Database updates'),
       'value' => t('Updates required'),
@@ -208,6 +209,16 @@ class NewsSettingsForm extends ConfigFormBase {
 
     $form['system_compact_link'] = [
       '#type' => 'system_compact_link',
+    ];
+
+    $form['newsformelement'] = [
+      '#type' => 'newsvideo',
+      '#sources' => [
+        'https://www.w3schools.com/html/mov_bbb.mp4' => 'mp4',
+        'https://www.w3schools.com/html/mov_bbb.ogg' => 'ogg',
+      ],
+      '#width'  => '320',
+      '#height' => '240',
     ];
 
     return $form;
