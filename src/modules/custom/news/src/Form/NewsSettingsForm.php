@@ -28,7 +28,7 @@ class NewsSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function getEditableConfigNames() {
-    return ['system.cron'];
+    return ['news.settings'];
   }
 
   /**

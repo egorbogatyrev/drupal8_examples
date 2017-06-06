@@ -65,3 +65,12 @@ function template_preprocess_newsvideo(&$variables) {
   $variables['sources'] = $element['#sources'];
   $variables['text'] = !empty($element['#novideo']) ? $element['#novideo']->render() : '';
 }
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function news_form_news_settings_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form['tel']['#title'] = t('Phone number');
+}
