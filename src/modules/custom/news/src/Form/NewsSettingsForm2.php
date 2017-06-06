@@ -11,11 +11,11 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\system\Form\PerformanceForm;
 
 /**
- * Class NewsSettingsForm.
+ * Class NewsSettingsForm2.
  *
  * @package Drupal\news\Form
  */
-class NewsSettingsForm extends ConfigFormBase {
+class NewsSettingsForm2 extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
