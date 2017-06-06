@@ -1,0 +1,5 @@
+news.add_block:
+  route_name: news.news_settings
+  title: 'Add news block'
+  appears_on:
+    - news.news_settings
