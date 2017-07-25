@@ -1,0 +1,10 @@
+<?php
+
+use Drupal\Core\Block\BlockPluginInterface;
+
+/**
+ * Implements hook_block_view_BASE_BLOCK_ID_alter().
+ */
+function news_block_view_newsblock_alter(array &$build, BlockPluginInterface $block) {
+  $build['#contextual_links']['news.news_settings']['route_parameters']['block'] = 'newsblock';
+}

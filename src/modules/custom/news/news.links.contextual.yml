@@ -1,7 +1,4 @@
 news.news_settings:
   title: 'Edit news settings'
   route_name: news.news_settings
-  group: 'block'
-  options:
-    attributes:
-      target: _blank
+  group: 'news.news_settings'
