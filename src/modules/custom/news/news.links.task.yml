@@ -1,11 +1,11 @@
 news.blocklist:
-  route_name: news.news_settings
+  route_name: news.news_blocklist
   title: 'News block list'
-  base_route: news.news_settings
+  base_route: news.news_blocklist
   weight: 1
 
 news.settings:
-  route_name: dblog.overview
+  route_name: news.news_settings
   title: 'Settings'
-  base_route: news.news_settings
+  base_route: news.news_blocklist
   weight: 2
