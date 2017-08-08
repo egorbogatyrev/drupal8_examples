@@ -39,6 +39,7 @@ class NewsBlockListForm extends ConfigFormBase {
       $this->t('Name'),
       $this->t('Description'),
       $this->t('Operations'),
+      $this->t('Weight'),
     ];
 
     // Fill out the rows.
@@ -67,13 +68,16 @@ class NewsBlockListForm extends ConfigFormBase {
           '#title' => $this->t('Weight'),
           '#default_value' => '',
           '#delta' => 10,
+          '#title_display' => 'invisible',
           '#attributes' => [
             'class' => [
+              'weight',
 //              'newsblock-tabledrag',
-              'delta-order',
+//              'delta-order',
             ],
           ],
         ]],
+//        'class' => ['newsblock-tabledrag']],
       ];
       $rows[] = [
         'data' => $cells,
@@ -135,14 +139,18 @@ class NewsBlockListForm extends ConfigFormBase {
 
     $a = 1;
     $form['blocklist'] = [
-      '#theme'  => 'table',
-      '#rows'   => $rows,
+      '#type'  => 'table',
       '#header' => $header,
+      '#rows'   => $rows,
+      '#attributes' => [
+//        'id' => 'news-blocklist-12345',
+      ],
       '#tabledrag' => [
         [
           'action' => 'order',
           'relationship' => 'sibling',
-          'group' => 'newsblock-tabledrag',
+          'group' => 'weight',
+//          'group' => 'newsblock-tabledrag',
         ],
       ],
     ];

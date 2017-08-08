@@ -8,3 +8,16 @@ use Drupal\Core\Block\BlockPluginInterface;
 function news_block_view_newsblock_alter(array &$build, BlockPluginInterface $block) {
   $build['#contextual_links']['news.news_settings']['route_parameters']['block'] = 'newsblock';
 }
+
+/**
+ * Implements hook_theme().
+ */
+function news_theme($existing, $type, $theme, $path) {
+  return [
+    // From file.field.inc.
+    'file_widget_multiple' => [
+      'render element' => 'element',
+      'file' => 'news.admin.inc',
+    ],
+  ];
+}
