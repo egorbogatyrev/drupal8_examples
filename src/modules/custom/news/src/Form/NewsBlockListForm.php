@@ -33,127 +33,64 @@ class NewsBlockListForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildForm($form, $form_state);
+    $conf = $this->config('news.settings')->get('blocklist');
+
+    // Rename the save button.
+    $form['actions']['submit']['#value'] = $this->t('Save');
+
     // Initialize header of table.
     $header = [
-      '',
       $this->t('Name'),
       $this->t('Description'),
       $this->t('Operations'),
       $this->t('Weight'),
     ];
 
-    // Fill out the rows.
-    $rows = [];
-    for ($i = 0; $i < 3; $i++) {
-      $cells = [
-        ['data' => '', 'class' => ['field-multiple-drag']],
-        ['data' => ['#markup' => 'AAAAA']],
-        ['data' => ['#markup' => 'JKHFKJHASDKFHAS ASHFKJHASKJF']],
-        ['data' => [
-          '#type' => 'dropbutton',
-          '#title' => $this->t('Dropbutton'),
-          '#links' => [
-            'edit' => [
-              'title' => $this->t('Edit'),
-              'url'   => Url::fromUri('https:google.com'),
-            ],
-            'delete' => [
-              'title' => $this->t('Delete'),
-              'url'   => Url::fromUri('https:yandex.ru'),
-            ],
-          ]],
-        ],
-        ['data' => [
-          '#type' => 'weight',
-          '#title' => $this->t('Weight'),
-          '#default_value' => '',
-          '#delta' => 10,
-          '#title_display' => 'invisible',
-          '#attributes' => [
-            'class' => [
-              'weight',
-//              'newsblock-tabledrag',
-//              'delta-order',
-            ],
-          ],
-        ]],
-//        'class' => ['newsblock-tabledrag']],
-      ];
-      $rows[] = [
-        'data' => $cells,
-        'class' => ['draggable', 'newsblock-tabledrag'],
-      ];
-
-//
-//      $cells[$i][]['data'] = [
-//        '#markup' => 'AAAAA',
-//        '#attributes' => [
-////          'class' => ['draggable'],
-//        ],
-//      ];
-//      $cells[$i][]['data'] = [
-//        '#markup' => 'JKHFKJHASDKFHAS ASHFKJHASKJF',
-//        '#attributes' => [
-////          'class' => ['draggable'],
-//        ],
-//      ];
-//      $cells[$i][]['data'] = [
-//        '#type' => 'dropbutton',
-//        '#title' => $this->t('Dropbutton'),
-//        '#links' => [
-//          'edit' => [
-//            'title' => $this->t('Edit'),
-//            'url'   => Url::fromUri('https:google.com'),
-//          ],
-//          'delete' => [
-//            'title' => $this->t('Delete'),
-//            'url'   => Url::fromUri('https:yandex.ru'),
-//          ],
-//        ],
-//        '#attributes' => [
-////          'class' => ['draggable'],
-//        ],
-//      ];
-//      $cells[$i][]['data'] = [
-//        '#type' => 'weight',
-//        '#title' => $this->t('Weight'),
-//        '#default_value' => '',
-//        '#delta' => 10,
-//        '#attributes' => [
-//          'class' => [
-//            'newsblock-tabledrag',
-//          ],
-//        ],
-//      ];
-    }
-
-//    $cells = [
-//      ['data' => '', 'class' => ['field-multiple-drag']],
-//      ['data' => $item],
-//      ['data' => $delta_element, 'class' => ['delta-order']],
-//    ];
-//    $rows[] = [
-//      'data' => $cells,
-//      'class' => ['draggable'],
-//    ];
-
-    $a = 1;
+    // Initialize the table.
     $form['blocklist'] = [
-      '#type'  => 'table',
+      '#type' => 'table',
       '#header' => $header,
-      '#rows'   => $rows,
       '#attributes' => [
-//        'id' => 'news-blocklist-12345',
+        'id' => 'news-blocklist',
       ],
       '#tabledrag' => [
         [
           'action' => 'order',
           'relationship' => 'sibling',
-          'group' => 'weight',
-//          'group' => 'newsblock-tabledrag',
+          'group' => 'newsblock-tabledrag',
         ],
       ],
     ];
+
+    for ($i = 0; $i < 3; $i++) {
+      $weight = isset($conf[$i]['weight']) ? $conf[$i]['weight'] : 0;
+      $form['blocklist'][$i]['#attributes']['class'][] = 'draggable';
+      $form['blocklist'][$i]['#weight'] = (int) $weight;
+      $form['blocklist'][$i]['name']['#markup'] = $this->t('NAME' . $i);
+      $form['blocklist'][$i]['desc']['#markup'] = $this->t('DESC' . $i);
+      $form['blocklist'][$i]['options'] = [
+        '#type' => 'dropbutton',
+        '#title' => $this->t('Dropbutton'),
+        '#links' => [
+          'edit' => [
+            'title' => $this->t('Edit'),
+            'url'   => Url::fromUri('https:google.com'),
+          ],
+          'delete' => [
+            'title' => $this->t('Delete'),
+            'url'   => Url::fromUri('https:yandex.ru'),
+          ],
+        ],
+      ];
+      $form['blocklist'][$i]['weight'] = [
+        '#type' => 'weight',
+        '#title' => $this->t('Weight'),
+        '#title_display' => 'invisible',
+        '#default_value' => $weight,
+        '#delta' => 10,
+        '#attributes' => ['class' => ['newsblock-tabledrag']],
+      ];
+    }
 
     return $form;
   }
@@ -162,9 +99,9 @@ class NewsBlockListForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-//    $this->config('news.settings')
-//      ->set('tel', $form_state->getValue('tel'))
-//      ->save();
+    $this->config('news.settings')
+      ->set('blocklist', $form_state->getValue('blocklist'))
+      ->save();
 
     parent::submitForm($form, $form_state);
   }
