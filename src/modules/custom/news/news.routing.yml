@@ -13,3 +13,11 @@ news.news_blocklist:
     _title: 'News'
   requirements:
     _permission: 'administer content'
+
+news.news_addblock:
+  path: '/admin/config/services/news/add'
+  defaults:
+    _form: '\Drupal\news\Form\NewsBlockAddForm'
+    _title: 'Add a new News block'
+  requirements:
+    _permission: 'administer content'
