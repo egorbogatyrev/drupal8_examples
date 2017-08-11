@@ -65,7 +65,7 @@ class NewsBlockListForm extends ConfigFormBase {
     for ($i = 0; $i < 3; $i++) {
       $weight = isset($conf[$i]['weight']) ? $conf[$i]['weight'] : 0;
       $form['blocklist'][$i]['#attributes']['class'][] = 'draggable';
-      $form['blocklist'][$i]['#weight'] = (int) $weight;
+      $form['blocklist'][$i]['#weight'] = $weight;
       $form['blocklist'][$i]['name']['#markup'] = $this->t('NAME' . $i);
       $form['blocklist'][$i]['desc']['#markup'] = $this->t('DESC' . $i);
       $form['blocklist'][$i]['options'] = [
@@ -92,7 +92,20 @@ class NewsBlockListForm extends ConfigFormBase {
       ];
     }
 
+    // Sort table rows.
+    uasort($form['blocklist'], [$this, 'sortRows']);
+
     return $form;
+  }
+
+  /**
+   * Sorts table rows by weight.
+   */
+  protected function sortRows($a, $b) {
+    if (!isset($a['#weight'], $b['#weight'])) {
+      return FALSE;
+    }
+    return $a['#weight'] - $b['#weight'];
   }
 
   /**

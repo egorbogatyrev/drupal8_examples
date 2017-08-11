@@ -2,7 +2,6 @@
 
 namespace Drupal\news\Form;
 
-
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
