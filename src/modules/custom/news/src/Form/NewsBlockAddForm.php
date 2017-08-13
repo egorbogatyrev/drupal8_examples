@@ -2,6 +2,9 @@
 
 namespace Drupal\news\Form;
 
+use Drupal\block\Entity\Block;
+use Drupal\block_content\Entity\BlockContent;
+use Drupal\Core\Field\FieldConfigBase;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
@@ -60,7 +63,15 @@ class NewsBlockAddForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    // TODO: Implement submitForm() method.
+    $block_content = BlockContent::create([
+      'info' => $form_state->getValue('desc'),
+      'type' => 'basic',
+      'body' => [
+        'value' => $form_state->getValue('body')['value'],
+        'format' => $form_state->getValue('body')['format'],
+      ],
+    ]);
+    $block_content->save();
   }
 
 }
