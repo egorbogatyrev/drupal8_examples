@@ -102,10 +102,7 @@ class NewsBlockListForm extends ConfigFormBase {
    * Sorts table rows by weight.
    */
   protected function sortRows($a, $b) {
-    if (!isset($a['#weight'], $b['#weight'])) {
-      return FALSE;
-    }
-    return $a['#weight'] - $b['#weight'];
+    return !isset($a['#weight'], $b['#weight']) ? FALSE : ($a['#weight'] - $b['#weight']);
   }
 
   /**

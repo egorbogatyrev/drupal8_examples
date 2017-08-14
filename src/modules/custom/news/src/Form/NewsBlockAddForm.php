@@ -2,9 +2,7 @@
 
 namespace Drupal\news\Form;
 
-use Drupal\block\Entity\Block;
 use Drupal\block_content\Entity\BlockContent;
-use Drupal\Core\Field\FieldConfigBase;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
@@ -72,6 +70,9 @@ class NewsBlockAddForm extends FormBase {
       ],
     ]);
     $block_content->save();
+    // Set the success message and redirect back to the list of modules.
+    drupal_set_message($this->t('New block %name has been created.', ['%name' => $form_state->getValue('desc')]));
+    $form_state->setRedirect('news.news_blocklist');
   }
 
 }
