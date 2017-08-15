@@ -2,7 +2,7 @@
 
 namespace Drupal\news\Form;
 
-use Drupal\Core\Form\FormBase;
+use Drupal\block_content\Entity\BlockContent;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
@@ -62,12 +62,14 @@ class NewsBlockListForm extends ConfigFormBase {
       ],
     ];
 
-    for ($i = 0; $i < 3; $i++) {
+    $blocks = BlockContent::loadMultiple();
+    /** @var  BlockContent $block */
+    foreach ($blocks as $i => $block) {
       $weight = isset($conf[$i]['weight']) ? $conf[$i]['weight'] : 0;
       $form['blocklist'][$i]['#attributes']['class'][] = 'draggable';
       $form['blocklist'][$i]['#weight'] = $weight;
-      $form['blocklist'][$i]['name']['#markup'] = $this->t('NAME' . $i);
-      $form['blocklist'][$i]['desc']['#markup'] = $this->t('DESC' . $i);
+      $form['blocklist'][$i]['name']['#markup'] = $block->get('info')->getString();
+      $form['blocklist'][$i]['desc']['#markup'] = $block->get('info')->getString();
       $form['blocklist'][$i]['options'] = [
         '#type' => 'dropbutton',
         '#title' => $this->t('Dropbutton'),
