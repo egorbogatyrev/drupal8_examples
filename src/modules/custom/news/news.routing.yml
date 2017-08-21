@@ -10,6 +10,6 @@ news.news_sources:
   path: '/admin/config/services/news'
   defaults:
     _form: '\Drupal\news\Form\NewsSourcesForm'
-    _title: 'News sources'
+    _title: 'News'
   requirements:
     _permission: 'administer content'
