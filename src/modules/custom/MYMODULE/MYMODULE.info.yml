@@ -1,0 +1,6 @@
+name: MYMODULE entity
+description: 'Provides MYMODULE entity.'
+type: module
+core: 8.x
+package: Other
+version: '8.x-1.0'
