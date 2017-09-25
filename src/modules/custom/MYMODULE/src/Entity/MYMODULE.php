@@ -26,9 +26,9 @@ use Drupal\Core\Field\BaseFieldDefinition;
  *     "access" = "Drupal\core\Entity\EntityAccessControlHandler",
  *     "views_data" = "Drupal\views\EntityViewsData",
  *     "form" = {
- *       "default" = "Drupal\MYMODULE\MYMODULEForm",
+ *       "default" = "Drupal\MYMODULE\Form\MYMODULEForm",
  *       "delete" = "Drupal\MYMODULE\Form\MYMODULEDeleteForm",
- *       "edit" = "Drupal\MYMODULE\MYMODULEForm"
+ *       "edit" = "Drupal\MYMODULE\Form\MYMODULEForm"
  *     },
  *   },
  *   base_table = "MYMODULE",
