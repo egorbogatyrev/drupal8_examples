@@ -21,7 +21,7 @@ use Drupal\node\NodeTypeInterface;
  *       "edit" = "Drupal\MYMODULE\MYMODULETypeForm",
  *       "delete" = "Drupal\MYMODULE\Form\MYMODULETypeDeleteConfirm"
  *     },
- *     "list_builder" = "Drupal\Core\Config\Entity\ConfigEntityListBuilder",
+ *     "list_builder" = "Drupal\MYMODULE\MYMODULETypeListBuilder",
  *   },
  *   admin_permission = "administer content types",
  *   config_prefix = "type",
@@ -31,9 +31,9 @@ use Drupal\node\NodeTypeInterface;
  *     "label" = "name"
  *   },
  *   links = {
- *     "edit-form" = "/admin/structure/types/manage/{MYMODULE_type}",
- *     "delete-form" = "/admin/structure/types/manage/{MYMODULE_type}/delete",
- *     "collection" = "/admin/structure/types",
+ *     "edit-form" = "/admin/MYMODULE/types/manage/{MYMODULE_type}",
+ *     "delete-form" = "/admin/MYMODULE/types/manage/{MYMODULE_type}/delete",
+ *     "collection" = "/admin/MYMODULE/types",
  *   },
  *   config_export = {
  *     "name",

@@ -13,10 +13,10 @@
 #    _entity_access: 'content_entity_example_contact.view'
 #
 entity.MYMODULE_type.collection:
-  path: '/admin/MYMODULE/list'
+  path: '/admin/MYMODULE/types'
   defaults:
     _entity_list: 'MYMODULE_type'
-    _title: 'MYMODULE List'
+    _title: 'MYMODULE types'
   requirements:
    _permission: 'administer content types'
 
