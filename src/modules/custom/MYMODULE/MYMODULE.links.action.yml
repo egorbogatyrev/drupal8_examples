@@ -1,0 +1,6 @@
+MYMODULE.type_add:
+  # Which route will be called by the link
+  route_name: MYMODULE.type_add
+  title: 'Add MYMODULE type'
+  appears_on:
+    - entity.MYMODULE_type.collection

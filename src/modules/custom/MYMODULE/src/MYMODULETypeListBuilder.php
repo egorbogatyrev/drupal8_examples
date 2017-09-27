@@ -55,9 +55,9 @@ class MYMODULETypeListBuilder extends ConfigEntityListBuilder {
    */
   public function render() {
     $build = parent::render();
-    $build['table']['#empty'] = $this->t('No content types available. <a href=":link">Add content type</a>.', [
-        ':link' => Url::fromRoute('node.type_add')->toString()
-      ]);
+    $build['table']['#empty'] = $this->t('No MYMODULE types available. <a href=":link">Add MYMODULE type</a>.', [
+      ':link' => Url::fromRoute('MYMODULE.type_add')->toString(),
+    ]);
     return $build;
   }
 

@@ -6,11 +6,10 @@ use Drupal\Core\Entity\BundleEntityFormBase;
 use Drupal\Core\Entity\EntityManagerInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\language\Entity\ContentLanguageSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Form handler for node type forms.
+ * Form handler for MYMODULE type forms.
  */
 class MYMODULETypeForm extends BundleEntityFormBase {
 
@@ -22,7 +21,7 @@ class MYMODULETypeForm extends BundleEntityFormBase {
   protected $entityManager;
 
   /**
-   * Constructs the NodeTypeForm object.
+   * Constructs the MYMODULETypeForm object.
    *
    * @param \Drupal\Core\Entity\EntityManagerInterface $entity_manager
    *   The entity manager.
@@ -50,24 +49,20 @@ class MYMODULETypeForm extends BundleEntityFormBase {
     if ($this->operation == 'add') {
       $form['#title'] = $this->t('Add MYMODULE type');
       $fields = $this->entityManager->getBaseFieldDefinitions('MYMODULE');
-      // Create a MYMODULE with a fake bundle using the type's UUID so that we can
-      // get the default values for workflow settings.
-      // @todo Make it possible to get default values without an entity.
-      //   https://www.drupal.org/MYMODULE/2318187
-      $node = $this->entityManager->getStorage('MYMODULE')->create(['type' => $type->uuid()]);
+      $module = $this->entityManager->getStorage('MYMODULE')->create(['type' => $type->uuid()]);
     }
     else {
-      $form['#title'] = $this->t('Edit %label content type', ['%label' => $type->label()]);
+      $form['#title'] = $this->t('Edit %label MYMODULE type', ['%label' => $type->label()]);
       $fields = $this->entityManager->getFieldDefinitions('MYMODULE', $type->id());
       // Create a node to get the current values for workflow settings fields.
-      $node = $this->entityManager->getStorage('MYMODULE')->create(['type' => $type->id()]);
+      $module = $this->entityManager->getStorage('MYMODULE')->create(['type' => $type->id()]);
     }
 
     $form['name'] = [
       '#title' => t('Name'),
       '#type' => 'textfield',
       '#default_value' => $type->label(),
-      '#description' => t('The human-readable name of this content type. This text will be displayed as part of the list on the <em>Add content</em> page. This name must be unique.'),
+      '#description' => t('The human-readable name of this MYMODULE type. This text will be displayed as part of the list on the <em>Add MYMODULE</em> page. This name must be unique.'),
       '#required' => TRUE,
       '#size' => 30,
     ];
@@ -81,8 +76,8 @@ class MYMODULETypeForm extends BundleEntityFormBase {
         'exists' => ['Drupal\MYMODULE\Entity\MYMODULEType', 'load'],
         'source' => ['name'],
       ],
-      '#description' => t('A unique machine-readable name for this content type. It must only contain lowercase letters, numbers, and underscores. This name will be used for constructing the URL of the %node-add page, in which underscores will be converted into hyphens.', [
-        '%node-add' => t('Add MYMODULE'),
+      '#description' => t('A unique machine-readable name for this content type. It must only contain lowercase letters, numbers, and underscores. This name will be used for constructing the URL of the %MYMODULE page, in which underscores will be converted into hyphens.', [
+        '%MYMODULE' => t('Add MYMODULE'),
       ]),
     ];
 
@@ -95,88 +90,37 @@ class MYMODULETypeForm extends BundleEntityFormBase {
 
     $form['additional_settings'] = [
       '#type' => 'vertical_tabs',
-      '#attached' => [
-        'library' => ['MYMODULE/drupal.content_types'],
-      ],
     ];
-
-    $form['submission'] = [
+    $form['settings'] = [
       '#type' => 'details',
-      '#title' => t('Submission form settings'),
+      '#title' => t('Settings'),
       '#group' => 'additional_settings',
       '#open' => TRUE,
     ];
-    $form['submission']['title_label'] = [
+    $form['settings']['title_label'] = [
       '#title' => t('Title field label'),
       '#type' => 'textfield',
       '#default_value' => $fields['title']->getLabel(),
       '#required' => TRUE,
     ];
-    $form['submission']['preview_mode'] = [
-      '#type' => 'radios',
-      '#title' => t('Preview before submitting'),
-      '#default_value' => $type->getPreviewMode(),
-      '#options' => [
-        DRUPAL_DISABLED => t('Disabled'),
-        DRUPAL_OPTIONAL => t('Optional'),
-        DRUPAL_REQUIRED => t('Required'),
-      ],
-    ];
-    $form['submission']['help']  = [
-      '#type' => 'textarea',
-      '#title' => t('Explanation or submission guidelines'),
-      '#default_value' => $type->getHelp(),
-      '#description' => t('This text will be displayed at the top of the page when creating or editing content of this type.'),
-    ];
-    $form['workflow'] = [
-      '#type' => 'details',
-      '#title' => t('Publishing options'),
-      '#group' => 'additional_settings',
-    ];
+
     $workflow_options = [
-      'status' => $node->status->value,
-      'promote' => $node->promote->value,
-      'sticky' => $node->sticky->value,
-      'revision' => $type->isNewRevision(),
+      'revision' => $module->isNewRevision(),
     ];
     // Prepare workflow options to be used for 'checkboxes' form element.
     $keys = array_keys(array_filter($workflow_options));
     $workflow_options = array_combine($keys, $keys);
-    $form['workflow']['options'] = [
+    $form['settings']['options'] = [
       '#type' => 'checkboxes',
-      '#title' => t('Default options'),
+      '#title' => t('Revision options'),
       '#default_value' => $workflow_options,
       '#options' => [
-        'status' => t('Published'),
-        'promote' => t('Promoted to front page'),
-        'sticky' => t('Sticky at top of lists'),
         'revision' => t('Create new revision'),
       ],
       '#description' => t('Users with the <em>Administer content</em> permission will be able to override these options.'),
     ];
-    if ($this->moduleHandler->moduleExists('language')) {
-      $form['language'] = [
-        '#type' => 'details',
-        '#title' => t('Language settings'),
-        '#group' => 'additional_settings',
-      ];
 
-      $language_configuration = ContentLanguageSettings::loadByEntityTypeBundle('MYMODULE', $type->id());
-      $form['language']['language_configuration'] = [
-        '#type' => 'language_configuration',
-        '#entity_information' => [
-          'entity_type' => 'MYMODULE',
-          'bundle' => $type->id(),
-        ],
-        '#default_value' => $language_configuration,
-      ];
-    }
-    $form['display'] = [
-      '#type' => 'details',
-      '#title' => t('Display settings'),
-      '#group' => 'additional_settings',
-    ];
-    $form['display']['display_submitted'] = [
+    $form['settings']['display_submitted'] = [
       '#type' => 'checkbox',
       '#title' => t('Display author and date information'),
       '#default_value' => $type->displaySubmitted(),
@@ -191,8 +135,8 @@ class MYMODULETypeForm extends BundleEntityFormBase {
    */
   protected function actions(array $form, FormStateInterface $form_state) {
     $actions = parent::actions($form, $form_state);
-    $actions['submit']['#value'] = t('Save content type');
-    $actions['delete']['#value'] = t('Delete content type');
+    $actions['submit']['#value'] = t('Save MYMODULE type');
+    $actions['delete']['#value'] = t('Delete MYMODULE type');
     return $actions;
   }
 
@@ -219,17 +163,16 @@ class MYMODULETypeForm extends BundleEntityFormBase {
     $type->set('name', trim($type->label()));
 
     $status = $type->save();
-
     $t_args = ['%name' => $type->label()];
 
     if ($status == SAVED_UPDATED) {
-      drupal_set_message(t('The content type %name has been updated.', $t_args));
+      drupal_set_message(t('The MYMODULE type %name has been updated.', $t_args));
     }
     elseif ($status == SAVED_NEW) {
 //      node_add_body_field($type);
-      drupal_set_message(t('The content type %name has been added.', $t_args));
+      drupal_set_message(t('The MYMODULE type %name has been added.', $t_args));
       $context = array_merge($t_args, ['link' => $type->link($this->t('View'), 'collection')]);
-      $this->logger('MYMODULE')->notice('Added content type %name.', $context);
+      $this->logger('MYMODULE')->notice('Added MYMODULE type %name.', $context);
     }
 
     $fields = $this->entityManager->getFieldDefinitions('MYMODULE', $type->id());

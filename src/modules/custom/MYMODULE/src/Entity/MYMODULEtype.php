@@ -95,6 +95,13 @@ class MYMODULEtype extends ConfigEntityBundleBase implements ConfigEntityInterfa
   protected $preview_mode = DRUPAL_OPTIONAL;
 
   /**
+   * Display setting for author and date Submitted by post information.
+   *
+   * @var bool
+   */
+  protected $display_submitted = TRUE;
+
+  /**
    * {@inheritdoc}
    */
   public function id() {
@@ -142,6 +149,13 @@ class MYMODULEtype extends ConfigEntityBundleBase implements ConfigEntityInterfa
    */
   public function displaySubmitted() {
     return $this->display_submitted;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setDisplaySubmitted($display_submitted) {
+    $this->display_submitted = $display_submitted;
   }
 
   /**
