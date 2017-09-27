@@ -4,8 +4,11 @@ namespace Drupal\MYMODULE\Entity;
 
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\MYMODULE\MYMODULEInterface;
+use Drupal\user\UserInterface;
 
 // *     "storage" = "Drupal\MYMODULE\MyModuleStorage",
 // *     "storage_schema" = "Drupal\MYMODULE\MyModuleStorageSchema",
@@ -26,9 +29,9 @@ use Drupal\Core\Field\BaseFieldDefinition;
  *     "access" = "Drupal\core\Entity\EntityAccessControlHandler",
  *     "views_data" = "Drupal\views\EntityViewsData",
  *     "form" = {
- *       "default" = "Drupal\MYMODULE\Form\MYMODULEForm",
+ *       "add" = "Drupal\MYMODULE\Form\MYMODULEForm",
+ *       "edit" = "Drupal\MYMODULE\Form\MYMODULEForm",
  *       "delete" = "Drupal\MYMODULE\Form\MYMODULEDeleteForm",
- *       "edit" = "Drupal\MYMODULE\Form\MYMODULEForm"
  *     },
  *   },
  *   base_table = "MYMODULE",
@@ -59,7 +62,46 @@ use Drupal\Core\Field\BaseFieldDefinition;
  *   }
  * )
  */
-class MYMODULE extends ContentEntityBase implements ContentEntityInterface {
+class MYMODULE extends ContentEntityBase implements MYMODULEInterface {
+
+  use EntityChangedTrait;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getType() {
+    return $this->bundle();
+  }
+
+  /**
+   * @param int $uid
+   */
+  public function setOwnerId($uid) {
+    $this->set('user_id', $uid);
+    return $this;
+  }
+
+  /**
+   *
+   */
+  public function getOwnerId() {
+    return $this->get('user_id')->target_id;
+  }
+
+  /**
+   *
+   */
+  public function getOwner() {
+    return $this->get('user_id')->entity;
+  }
+
+  /**
+   * @param \Drupal\user\UserInterface $account
+   */
+  public function setOwner(UserInterface $account) {
+    $this->set('user_id', $account->id());
+    return $this;
+  }
 
   /**
    * {@inheritdoc}

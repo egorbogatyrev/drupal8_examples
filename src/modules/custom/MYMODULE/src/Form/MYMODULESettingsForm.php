@@ -18,7 +18,7 @@ class MYMODULESettingsForm extends FormBase {
    *   The unique string identifying the form.
    */
   public function getFormId() {
-    return 'content_entity_example_settings';
+    return 'MYMODULE_settings';
   }
 
   /**
