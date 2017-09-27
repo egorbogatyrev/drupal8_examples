@@ -57,7 +57,7 @@ content_entity_example.contact_settings:
 
 ##########################################
 MYMODULE.type_add:
-  path: '/admin/structure/types/MYMODULE/add'
+  path: '/admin/MYMODULE/types/add'
   defaults:
     _entity_form: 'MYMODULE_type.add'
     _title: 'Add MYMODULE type'
@@ -65,7 +65,7 @@ MYMODULE.type_add:
     _permission: 'administer content types'
 
 entity.MYMODULE_type.edit_form:
-  path: '/admin/structure/types/manage/{MYMODULE_type}'
+  path: '/admin/MYMODULE/types/manage/{MYMODULE_type}'
   defaults:
     _entity_form: 'MYMODULE_type.edit'
     _title_callback: '\Drupal\Core\Entity\Controller\EntityController::title'
@@ -73,7 +73,7 @@ entity.MYMODULE_type.edit_form:
     _permission: 'administer content types'
 
 entity.MYMODULE_type.delete_form:
-  path: '/admin/structure/types/manage/{MYMODULE_type}/delete'
+  path: '/admin/MYMODULE/types/manage/{MYMODULE_type}/delete'
   defaults:
     _entity_form: 'MYMODULE_type.delete'
     _title: 'Delete'
