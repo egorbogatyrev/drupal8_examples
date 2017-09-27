@@ -226,7 +226,7 @@ class MYMODULETypeForm extends BundleEntityFormBase {
       drupal_set_message(t('The content type %name has been updated.', $t_args));
     }
     elseif ($status == SAVED_NEW) {
-      node_add_body_field($type);
+//      node_add_body_field($type);
       drupal_set_message(t('The content type %name has been added.', $t_args));
       $context = array_merge($t_args, ['link' => $type->link($this->t('View'), 'collection')]);
       $this->logger('MYMODULE')->notice('Added content type %name.', $context);

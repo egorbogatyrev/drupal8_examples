@@ -5,6 +5,7 @@ namespace Drupal\MYMODULE\Entity;
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Entity\RevisionableEntityBundleInterface;
 use Drupal\node\NodeTypeInterface;
 
 /**
@@ -14,7 +15,7 @@ use Drupal\node\NodeTypeInterface;
  *   id = "MYMODULE_type",
  *   label = @Translation("MYMODULE type"),
  *   handlers = {
- *     "access" = "Drupal\core\Entity\EntityAccessControlHandler",
+ *     "access" = "Drupal\MYMODULE\MYMODULETypeAccessControlHandler",
  *     "form" = {
  *       "add" = "Drupal\MYMODULE\MYMODULETypeForm",
  *       "edit" = "Drupal\MYMODULE\MYMODULETypeForm",
@@ -45,7 +46,7 @@ use Drupal\node\NodeTypeInterface;
  *   }
  * )
  */
-class MYMODULEtype extends ConfigEntityBundleBase implements ConfigEntityInterface {
+class MYMODULEtype extends ConfigEntityBundleBase implements ConfigEntityInterface, RevisionableEntityBundleInterface {
 
   /**
    * The machine name of this node type.
@@ -141,6 +142,20 @@ class MYMODULEtype extends ConfigEntityBundleBase implements ConfigEntityInterfa
    */
   public function displaySubmitted() {
     return $this->display_submitted;
+  }
+
+  /**
+   * @param $new_revision
+   */
+  public function setNewRevision($new_revision) {
+    $this->new_revision = $new_revision;
+  }
+
+  /**
+   *
+   */
+  public function shouldCreateNewRevision() {
+    return $this->isNewRevision();
   }
 
 }

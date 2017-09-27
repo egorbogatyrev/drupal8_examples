@@ -12,16 +12,14 @@
 #  # Calls the access controller of the entity, $operation 'view'
 #    _entity_access: 'content_entity_example_contact.view'
 #
-#entity.content_entity_example_contact.collection:
-#  path: '/content_entity_example_contact/list'
-#  defaults:
-#  # Calls the list controller, defined in the annotation of the contact entity.
-#    _entity_list: 'content_entity_example_contact'
-#    _title: 'Contact List'
-#  requirements:
-#  # Checks for permission directly.
-#    _permission: 'view contact entity'
-#
+entity.MYMODULE_type.collection:
+  path: '/admin/MYMODULE/list'
+  defaults:
+    _entity_list: 'MYMODULE_type'
+    _title: 'MYMODULE List'
+  requirements:
+   _permission: 'administer content types'
+
 MYMODULE.add:
   path: '/MYMODULE/add'
   defaults:
@@ -59,7 +57,7 @@ content_entity_example.contact_settings:
 
 ##########################################
 MYMODULE.type_add:
-  path: '/admin/structure/types/add'
+  path: '/admin/structure/types/MYMODULE/add'
   defaults:
     _entity_form: 'MYMODULE_type.add'
     _title: 'Add MYMODULE type'
