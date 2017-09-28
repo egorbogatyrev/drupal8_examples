@@ -15,6 +15,13 @@ use Drupal\user\UserInterface;
 // *   list_cache_contexts = { "user.node_grants:view" },
 // *   field_ui_base_route = "entity.MYMODULE_type.edit_form",
 
+//*   handlers = {
+//  *     "storage" = "Drupal\Core\Entity\Sql\SqlContentEntityStorage",
+// *      "storage_schema" = "Drupal\Core\Entity\Sql\SqlContentEntityStorageSchema",
+// *   data_table = "MYMODULE_data",
+// *   revision_table = "MYMODULE_revision",
+// *   revision_data_table = "MYMODULE_data_revision",
+
 /**
  * Class MYMODULE.
  *
@@ -29,6 +36,7 @@ use Drupal\user\UserInterface;
  *     "access" = "Drupal\core\Entity\EntityAccessControlHandler",
  *     "views_data" = "Drupal\views\EntityViewsData",
  *     "form" = {
+ *       "default" = "Drupal\MYMODULE\Form\MYMODULEForm",
  *       "add" = "Drupal\MYMODULE\Form\MYMODULEForm",
  *       "edit" = "Drupal\MYMODULE\Form\MYMODULEForm",
  *       "delete" = "Drupal\MYMODULE\Form\MYMODULEDeleteForm",
@@ -53,6 +61,7 @@ use Drupal\user\UserInterface;
  *   bundle_entity_type = "MYMODULE_type",
  *   common_reference_target = TRUE,
  *   permission_granularity = "bundle",
+ *   field_ui_base_route = "entity.MYMODULE_type.edit_form",
  *   links = {
  *     "canonical" = "/MYMODULE/{MYMODULE}",
  *     "delete-form" = "/MYMODULE/{MYMODULE}/delete",

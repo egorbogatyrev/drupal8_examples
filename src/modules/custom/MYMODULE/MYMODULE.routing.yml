@@ -65,7 +65,7 @@ MYMODULE.type_add:
     _permission: 'administer content types'
 
 entity.MYMODULE_type.edit_form:
-  path: '/admin/MYMODULE/types/manage/{MYMODULE_type}'
+  path: '/admin/MYMODULE/types/manage/{MYMODULE_type}/edit'
   defaults:
     _entity_form: 'MYMODULE_type.edit'
     _title_callback: '\Drupal\Core\Entity\Controller\EntityController::title'

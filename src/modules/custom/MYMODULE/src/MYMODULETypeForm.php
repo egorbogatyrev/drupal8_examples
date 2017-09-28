@@ -182,16 +182,6 @@ class MYMODULETypeForm extends BundleEntityFormBase {
     if ($title_field->getLabel() != $title_label) {
       $title_field->getConfig($type->id())->setLabel($title_label)->save();
     }
-    // Update workflow options.
-    // @todo Make it possible to get default values without an entity.
-    //   https://www.drupal.org/node/2318187
-    $node = $this->entityManager->getStorage('MYMODULE')->create(['type' => $type->id()]);
-    foreach (['status', 'promote', 'sticky'] as $field_name) {
-      $value = (bool) $form_state->getValue(['options', $field_name]);
-      if ($node->$field_name->value != $value) {
-        $fields[$field_name]->getConfig($type->id())->setDefaultValue($value)->save();
-      }
-    }
 
     $this->entityManager->clearCachedFieldDefinitions();
     $form_state->setRedirectUrl($type->urlInfo('collection'));
