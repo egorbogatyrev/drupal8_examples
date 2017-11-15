@@ -1,6 +1,10 @@
-MYMODULE.type_add:
-  # Which route will be called by the link
-  route_name: MYMODULE.type_add
+entity.MYMODULE.add_form:
+  route_name: entity.MYMODULE.add_page
+  title: 'Add MYMODULE'
+  appears_on:
+    - entity.MYMODULE.collection
+entity.MYMODULE_type.add_form:
+  route_name: entity.MYMODULE_type.add_form
   title: 'Add MYMODULE type'
   appears_on:
     - entity.MYMODULE_type.collection

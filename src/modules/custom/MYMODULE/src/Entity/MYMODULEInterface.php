@@ -1,10 +1,11 @@
 <?php
 
-namespace Drupal\MYMODULE;
+namespace Drupal\MYMODULE\Entity;
 
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\user\EntityOwnerInterface;
+use Drupal\Core\Entity\RevisionLogInterface;
 use Drupal\Core\Entity\EntityChangedInterface;
+use Drupal\user\EntityOwnerInterface;
 
 /**
  * Provides an interface defining a Contact entity.
@@ -13,6 +14,6 @@ use Drupal\Core\Entity\EntityChangedInterface;
  *
  * @ingroup content_entity_example
  */
-interface MYMODULEInterface extends ContentEntityInterface, EntityOwnerInterface, EntityChangedInterface {
+interface MYMODULEInterface extends ContentEntityInterface, RevisionLogInterface, EntityChangedInterface, EntityOwnerInterface {
 
 }

@@ -4,9 +4,6 @@ namespace Drupal\MYMODULE\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
-use Drupal\Core\Entity\EntityStorageInterface;
-use Drupal\Core\Entity\RevisionableEntityBundleInterface;
-use Drupal\node\NodeTypeInterface;
 
 /**
  * Defines the MYMODULE type configuration entity.
@@ -15,25 +12,28 @@ use Drupal\node\NodeTypeInterface;
  *   id = "MYMODULE_type",
  *   label = @Translation("MYMODULE type"),
  *   handlers = {
- *     "access" = "Drupal\MYMODULE\MYMODULETypeAccessControlHandler",
+ *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "form" = {
- *       "add" = "Drupal\MYMODULE\MYMODULETypeForm",
- *       "edit" = "Drupal\MYMODULE\MYMODULETypeForm",
+ *       "add" = "Drupal\MYMODULE\Form\MYMODULETypeForm",
+ *       "edit" = "Drupal\MYMODULE\Form\MYMODULETypeForm",
  *       "delete" = "Drupal\MYMODULE\Form\MYMODULETypeDeleteConfirm"
  *     },
  *     "list_builder" = "Drupal\MYMODULE\MYMODULETypeListBuilder",
  *   },
  *   admin_permission = "administer content types",
- *   config_prefix = "type",
+ *   config_prefix = "MYMODULE_type",
  *   bundle_of = "MYMODULE",
  *   entity_keys = {
- *     "id" = "type",
- *     "label" = "name"
+ *     "id" = "id",
+ *     "label" = "label",
+ *     "uuid" = "uuid"
  *   },
  *   links = {
- *     "edit-form" = "/admin/MYMODULE/types/manage/{MYMODULE_type}",
- *     "delete-form" = "/admin/MYMODULE/types/manage/{MYMODULE_type}/delete",
- *     "collection" = "/admin/MYMODULE/types",
+ *     "canonical" = "/admin/MYMODULE/types/MYMODULE_type/{MYMODULE_type}",
+ *     "add-form" = "/admin/MYMODULE/types/MYMODULE_type/add",
+ *     "edit-form" = "/admin/MYMODULE/types/MYMODULE_type/{MYMODULE_type}/edit",
+ *     "delete-form" = "/admin/MYMODULE/types/MYMODULE_type/{MYMODULE_type}/delete",
+ *     "collection" = "/admin/MYMODULE/types/MYMODULE_type"
  *   },
  *   config_export = {
  *     "name",
@@ -46,130 +46,20 @@ use Drupal\node\NodeTypeInterface;
  *   }
  * )
  */
-class MYMODULEtype extends ConfigEntityBundleBase implements ConfigEntityInterface, RevisionableEntityBundleInterface {
+class MYMODULEtype extends ConfigEntityBundleBase implements ConfigEntityInterface {
 
   /**
-   * The machine name of this node type.
-   *
-   * @var string
-   *
-   * @todo Rename to $id.
-   */
-  protected $type;
-
-  /**
-   * The human-readable name of the node type.
-   *
-   * @var string
-   *
-   * @todo Rename to $label.
-   */
-  protected $name;
-
-  /**
-   * A brief description of this node type.
+   * The Example type ID.
    *
    * @var string
    */
-  protected $description;
+  protected $id;
 
   /**
-   * Help information shown to the user when creating a Node of this type.
+   * The Example type label.
    *
    * @var string
    */
-  protected $help;
-
-  /**
-   * Default value of the 'Create new revision' checkbox of this node type.
-   *
-   * @var bool
-   */
-  protected $new_revision = TRUE;
-
-  /**
-   * The preview mode.
-   *
-   * @var int
-   */
-  protected $preview_mode = DRUPAL_OPTIONAL;
-
-  /**
-   * Display setting for author and date Submitted by post information.
-   *
-   * @var bool
-   */
-  protected $display_submitted = TRUE;
-
-  /**
-   * {@inheritdoc}
-   */
-  public function id() {
-    return $this->type;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function isLocked() {
-    $locked = \Drupal::state()->get('MYMODULE.type.locked');
-    return isset($locked[$this->id()]) ? $locked[$this->id()] : FALSE;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getDescription() {
-    return $this->description;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getPreviewMode() {
-    return $this->preview_mode;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getHelp() {
-    return $this->help;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function isNewRevision() {
-    return $this->new_revision;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function displaySubmitted() {
-    return $this->display_submitted;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setDisplaySubmitted($display_submitted) {
-    $this->display_submitted = $display_submitted;
-  }
-
-  /**
-   * @param $new_revision
-   */
-  public function setNewRevision($new_revision) {
-    $this->new_revision = $new_revision;
-  }
-
-  /**
-   *
-   */
-  public function shouldCreateNewRevision() {
-    return $this->isNewRevision();
-  }
+  protected $label;
 
 }
