@@ -1,0 +1,6 @@
+name: Example entity
+description: 'Provides example entity.'
+type: module
+core: 8.x
+package: Other
+version: '8.x-1.0'

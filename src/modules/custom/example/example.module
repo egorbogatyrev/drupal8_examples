@@ -1,0 +1,58 @@
+<?php
+
+/**
+ * @file
+ * Contains example.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function example_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the example module.
+    case 'help.page.example':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function example_theme() {
+  $theme = [];
+  $theme['example'] = [
+    'render element' => 'elements',
+    'file' => 'example.page.inc',
+    'template' => 'example',
+  ];
+  $theme['example_content_add_list'] = [
+    'render element' => 'content',
+    'variables' => ['content' => NULL],
+    'file' => 'example.page.inc',
+  ];
+  return $theme;
+}
+
+/**
+* Implements hook_theme_suggestions_HOOK().
+*/
+function example_theme_suggestions_example(array $variables) {
+  $suggestions = [];
+  $entity = $variables['elements']['#example'];
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+
+  $suggestions[] = 'example__' . $sanitized_view_mode;
+  $suggestions[] = 'example__' . $entity->bundle();
+  $suggestions[] = 'example__' . $entity->bundle() . '__' . $sanitized_view_mode;
+  $suggestions[] = 'example__' . $entity->id();
+  $suggestions[] = 'example__' . $entity->id() . '__' . $sanitized_view_mode;
+  return $suggestions;
+}

@@ -1,0 +1,18 @@
+
+# Example menu items definition
+entity.example.collection:
+  title: 'Example list'
+  route_name: entity.example.collection
+  description: 'List Example entities'
+  parent: system.admin_structure
+  weight: 100
+
+
+# Example type menu items definition
+entity.example_type.collection:
+  title: 'Example type'
+  route_name: entity.example_type.collection
+  description: 'List Example type (bundles)'
+  parent: system.admin_structure
+  weight: 99
+
