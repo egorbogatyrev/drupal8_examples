@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\MYMODULE\Form;
+namespace Drupal\mymodule\Form;
 
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Language\Language;
@@ -9,9 +9,9 @@ use Drupal\Core\Form\FormStateInterface;
 /**
  * Form controller for the content_entity_example entity edit forms.
  *
- * @ingroup MYMODULE
+ * @ingroup mymodule
  */
-class MYMODULEForm extends ContentEntityForm {
+class mymoduleForm extends ContentEntityForm {
 
   /**
    * {@inheritdoc}

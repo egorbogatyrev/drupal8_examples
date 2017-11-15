@@ -1,0 +1,10 @@
+entity.mymodule.add_form:
+  route_name: entity.mymodule.add_page
+  title: 'Add mymodule'
+  appears_on:
+    - entity.mymodule.collection
+entity.mymodule_type.add_form:
+  route_name: entity.mymodule_type.add_form
+  title: 'Add mymodule type'
+  appears_on:
+    - entity.mymodule_type.collection

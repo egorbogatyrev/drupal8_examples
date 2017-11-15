@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\MYMODULE\Entity;
+namespace Drupal\mymodule\Entity;
 
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\RevisionLogInterface;
@@ -14,6 +14,6 @@ use Drupal\user\EntityOwnerInterface;
  *
  * @ingroup content_entity_example
  */
-interface MYMODULEInterface extends ContentEntityInterface, RevisionLogInterface, EntityChangedInterface, EntityOwnerInterface {
+interface mymoduleInterface extends ContentEntityInterface, RevisionLogInterface, EntityChangedInterface, EntityOwnerInterface {
 
 }

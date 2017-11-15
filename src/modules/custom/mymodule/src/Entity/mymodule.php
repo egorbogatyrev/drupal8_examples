@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\MYMODULE\Entity;
+namespace Drupal\mymodule\Entity;
 
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
@@ -10,30 +10,29 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\user\UserInterface;
 
 /**
- * Class MYMODULE.
+ * Class mymodule.
  *
  * @ContentEntityType(
- *   id = "MYMODULE",
- *   label = @Translation("MYMODULE"),
- *   bundle_label = @Translation("MYMODULE type"),
+ *   id = "mymodule",
+ *   label = @Translation("mymodule"),
+ *   bundle_label = @Translation("mymodule type"),
  *   handlers = {
  *     "list_builder" = "Drupal\Core\Entity\EntityListBuilder",
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "translation" = "Drupal\content_translation\ContentTranslationHandler",
  *     "access" = "Drupal\core\Entity\EntityAccessControlHandler",
  *     "views_data" = "Drupal\views\EntityViewsData",
- *
  *     "form" = {
- *       "default" = "Drupal\MYMODULE\Form\MYMODULEForm",
- *       "add" = "Drupal\MYMODULE\Form\MYMODULEForm",
- *       "edit" = "Drupal\MYMODULE\Form\MYMODULEForm",
- *       "delete" = "Drupal\MYMODULE\Form\MYMODULEDeleteForm",
+ *       "default" = "Drupal\mymodule\Form\mymoduleForm",
+ *       "add" = "Drupal\mymodule\Form\mymoduleForm",
+ *       "edit" = "Drupal\mymodule\Form\mymoduleForm",
+ *       "delete" = "Drupal\mymodule\Form\mymoduleDeleteForm",
  *     },
  *   },
- *   base_table = "MYMODULE",
- *   data_table = "MYMODULE_field_data",
- *   revision_table = "MYMODULE_revision",
- *   revision_data_table = "MYMODULE_field_revision",
+ *   base_table = "mymodule",
+ *   data_table = "mymodule_field_data",
+ *   revision_table = "mymodule_revision",
+ *   revision_data_table = "mymodule_field_revision",
  *   translatable = TRUE,
  *   show_revision_ui = TRUE,
  *   entity_keys = {
@@ -46,24 +45,24 @@ use Drupal\user\UserInterface;
  *     "langcode" = "langcode",
  *     "status" = "status",
  *   },
- *   bundle_entity_type = "MYMODULE_type",
- *   field_ui_base_route = "entity.MYMODULE_type.edit_form",
+ *   bundle_entity_type = "mymodule_type",
+ *   field_ui_base_route = "entity.mymodule_type.edit_form",
  *   links = {
- *     "canonical" = "/MYMODULE/{MYMODULE}",
- *     "delete-form" = "/admin/MYMODULE/{MYMODULE}/delete",
- *     "edit-form" = "/admin/MYMODULE/{MYMODULE}/edit",
- *     "add-page" = "/admin/MYMODULE/add",
- *     "add-form" = "/admin/MYMODULE/add/{MYMODULE_type}",
- *     "version-history" = "/admin/MYMODULE/{MYMODULE}/revisions",
- *     "revision" = "/admin/MYMODULE/{MYMODULE}/revisions/{MYMODULE_revision}/view",
- *     "revision_revert" = "/admin/MYMODULE/{MYMODULE}/revisions/{MYMODULE_revision}/revert",
- *     "revision_delete" = "/admin/MYMODULE/{MYMODULE}/revisions/{MYMODULE_revision}/delete",
- *     "translation_revert" = "/admin/MYMODULE/{MYMODULE}/revisions/{MYMODULE_revision}/revert/{langcode}",
- *     "collection" = "/admin/MYMODULE",
+ *     "canonical" = "/mymodule/{mymodule}",
+ *     "delete-form" = "/admin/mymodule/{mymodule}/delete",
+ *     "edit-form" = "/admin/mymodule/{mymodule}/edit",
+ *     "add-page" = "/admin/mymodule/add",
+ *     "add-form" = "/admin/mymodule/add/{mymodule_type}",
+ *     "version-history" = "/admin/mymodule/{mymodule}/revisions",
+ *     "revision" = "/admin/mymodule/{mymodule}/revisions/{mymodule_revision}/view",
+ *     "revision_revert" = "/admin/mymodule/{mymodule}/revisions/{mymodule_revision}/revert",
+ *     "revision_delete" = "/admin/mymodule/{mymodule}/revisions/{mymodule_revision}/delete",
+ *     "translation_revert" = "/admin/mymodule/{mymodule}/revisions/{mymodule_revision}/revert/{langcode}",
+ *     "collection" = "/admin/mymodule",
  *   }
  * )
  */
-class MYMODULE extends RevisionableContentEntityBase implements MYMODULEInterface {
+class mymodule extends RevisionableContentEntityBase implements mymoduleInterface {
 
   use EntityChangedTrait;
 

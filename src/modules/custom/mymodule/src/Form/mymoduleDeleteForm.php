@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\MYMODULE\Form;
+namespace Drupal\mymodule\Form;
 
 use Drupal\Core\Entity\ContentEntityConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -11,7 +11,7 @@ use Drupal\Core\Url;
  *
  * @ingroup content_entity_example
  */
-class MYMODULEDeleteForm extends ContentEntityConfirmFormBase {
+class mymoduleDeleteForm extends ContentEntityConfirmFormBase {
 
   /**
    * {@inheritdoc}
@@ -45,12 +45,12 @@ class MYMODULEDeleteForm extends ContentEntityConfirmFormBase {
     $entity = $this->getEntity();
     $entity->delete();
 
-    $this->logger('MYMODULE')->notice('@type: deleted %title.',
+    $this->logger('mymodule')->notice('@type: deleted %title.',
       [
         '@type' => $this->entity->bundle(),
         '%title' => $this->entity->label(),
       ]);
-    $form_state->setRedirect('entity.MYMODULE.collection');
+    $form_state->setRedirect('entity.mymodule.collection');
   }
 
 }
