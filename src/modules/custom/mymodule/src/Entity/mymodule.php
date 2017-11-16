@@ -58,7 +58,7 @@ use Drupal\user\UserInterface;
  *     "revision_revert" = "/admin/mymodule/{mymodule}/revisions/{mymodule_revision}/revert",
  *     "revision_delete" = "/admin/mymodule/{mymodule}/revisions/{mymodule_revision}/delete",
  *     "translation_revert" = "/admin/mymodule/{mymodule}/revisions/{mymodule_revision}/revert/{langcode}",
- *     "collection" = "/admin/mymodule",
+ *     "collection" = "/admin/structure/mymodule",
  *   }
  * )
  */

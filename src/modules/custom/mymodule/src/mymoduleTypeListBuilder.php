@@ -1,27 +1,21 @@
 <?php
 
-namespace Drupal\MYMODULE;
+namespace Drupal\mymodule;
 
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
-use Drupal\Core\Url;
 use Drupal\Core\Entity\EntityInterface;
 
 /**
- * Defines a class to build a listing of node type entities.
- *
- * @see \Drupal\node\Entity\NodeType
+ * Provides a listing of Example type entities.
  */
-class MYMODULETypeListBuilder extends ConfigEntityListBuilder {
+class MymoduleTypeListBuilder extends ConfigEntityListBuilder {
 
   /**
    * {@inheritdoc}
    */
   public function buildHeader() {
-    $header['title'] = t('Name');
-    $header['description'] = [
-      'data' => t('Description'),
-      'class' => [RESPONSIVE_PRIORITY_MEDIUM],
-    ];
+    $header['label'] = $this->t('Mymodule type');
+    $header['id'] = $this->t('Machine name');
     return $header + parent::buildHeader();
   }
 
@@ -29,36 +23,10 @@ class MYMODULETypeListBuilder extends ConfigEntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
-    $row['title'] = [
-      'data' => $entity->label(),
-      'class' => ['menu-label'],
-    ];
-    $row['description']['data'] = ['#markup' => $entity->getDescription()];
+    $row['label'] = $entity->label();
+    $row['id'] = $entity->id();
+    // You probably want a few more properties here...
     return $row + parent::buildRow($entity);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getDefaultOperations(EntityInterface $entity) {
-    $operations = parent::getDefaultOperations($entity);
-    // Place the edit operation after the operations added by field_ui.module
-    // which have the weights 15, 20, 25.
-    if (isset($operations['edit'])) {
-      $operations['edit']['weight'] = 30;
-    }
-    return $operations;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function render() {
-    $build = parent::render();
-    $build['table']['#empty'] = $this->t('No MYMODULE types available. <a href=":link">Add MYMODULE type</a>.', [
-      ':link' => Url::fromRoute('MYMODULE.type_add')->toString(),
-    ]);
-    return $build;
   }
 
 }

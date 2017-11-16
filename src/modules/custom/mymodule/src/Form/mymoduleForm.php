@@ -3,7 +3,6 @@
 namespace Drupal\mymodule\Form;
 
 use Drupal\Core\Entity\ContentEntityForm;
-use Drupal\Core\Language\Language;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
@@ -17,16 +16,20 @@ class MymoduleForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    /* @var $entity \Drupal\content_entity_example\Entity\Contact */
+    /* @var $entity \Drupal\example\Entity\example */
     $form = parent::buildForm($form, $form_state);
+
+    if (!$this->entity->isNew()) {
+      $form['new_revision'] = [
+        '#type' => 'checkbox',
+        '#title' => $this->t('Create new revision'),
+        '#default_value' => FALSE,
+        '#weight' => 10,
+      ];
+    }
+
     $entity = $this->entity;
 
-    $form['langcode'] = [
-      '#title' => $this->t('Language'),
-      '#type' => 'language_select',
-      '#default_value' => $entity->getUntranslated()->language()->getId(),
-      '#languages' => Language::STATE_ALL,
-    ];
     return $form;
   }
 
@@ -34,8 +37,35 @@ class MymoduleForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
-    $entity = $this->getEntity();
-    $entity->save();
+    $entity = &$this->entity;
+
+    // Save as a new revision if requested to do so.
+    if (!$form_state->isValueEmpty('new_revision') && $form_state->getValue('new_revision') != FALSE) {
+      $entity->setNewRevision();
+
+      // If a new revision is created, save the current user as revision author.
+      $entity->setRevisionCreationTime(REQUEST_TIME);
+      $entity->setRevisionUserId(\Drupal::currentUser()->id());
+    }
+    else {
+      $entity->setNewRevision(FALSE);
+    }
+
+    $status = parent::save($form, $form_state);
+
+    switch ($status) {
+      case SAVED_NEW:
+        drupal_set_message($this->t('Created the %label Example.', [
+          '%label' => $entity->label(),
+        ]));
+        break;
+
+      default:
+        drupal_set_message($this->t('Saved the %label Example.', [
+          '%label' => $entity->label(),
+        ]));
+    }
+    $form_state->setRedirect('entity.mymodule.canonical', ['mymodule' => $entity->id()]);
   }
 
 }
