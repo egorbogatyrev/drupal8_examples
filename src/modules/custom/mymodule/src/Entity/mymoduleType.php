@@ -6,7 +6,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
 
 /**
- * Defines the mymodule type configuration entity.
+ * Defines the Mymodule type configuration entity.
  *
  * @ConfigEntityType(
  *   id = "mymodule_type",
@@ -14,11 +14,11 @@ use Drupal\Core\Config\Entity\ConfigEntityInterface;
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "form" = {
- *       "add" = "Drupal\mymodule\Form\mymoduleTypeForm",
- *       "edit" = "Drupal\mymodule\Form\mymoduleTypeForm",
- *       "delete" = "Drupal\mymodule\Form\mymoduleTypeDeleteConfirm"
+ *       "add" = "Drupal\mymodule\Form\MymoduleTypeForm",
+ *       "edit" = "Drupal\mymodule\Form\MymoduleTypeForm",
+ *       "delete" = "Drupal\mymodule\Form\MymoduleTypeDeleteConfirm"
  *     },
- *     "list_builder" = "Drupal\mymodule\mymoduleTypeListBuilder",
+ *     "list_builder" = "Drupal\mymodule\MymoduleTypeListBuilder",
  *   },
  *   admin_permission = "administer content types",
  *   config_prefix = "mymodule_type",
@@ -46,7 +46,7 @@ use Drupal\Core\Config\Entity\ConfigEntityInterface;
  *   }
  * )
  */
-class mymoduleType extends ConfigEntityBundleBase implements ConfigEntityInterface {
+class MymoduleType extends ConfigEntityBundleBase implements ConfigEntityInterface {
 
   /**
    * The Example type ID.

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\MYMODULE;
+namespace Drupal\mymodule;
 
 use Drupal\Core\Entity\BundleEntityFormBase;
 use Drupal\Core\Entity\EntityManagerInterface;
@@ -9,9 +9,9 @@ use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Form handler for MYMODULE type forms.
+ * Form handler for mymodule type forms.
  */
-class MYMODULETypeForm extends BundleEntityFormBase {
+class MymoduleTypeForm extends BundleEntityFormBase {
 
   /**
    * The entity manager.
@@ -21,7 +21,7 @@ class MYMODULETypeForm extends BundleEntityFormBase {
   protected $entityManager;
 
   /**
-   * Constructs the MYMODULETypeForm object.
+   * Constructs the MymoduleTypeForm object.
    *
    * @param \Drupal\Core\Entity\EntityManagerInterface $entity_manager
    *   The entity manager.
@@ -47,15 +47,15 @@ class MYMODULETypeForm extends BundleEntityFormBase {
 
     $type = $this->entity;
     if ($this->operation == 'add') {
-      $form['#title'] = $this->t('Add MYMODULE type');
-      $fields = $this->entityManager->getBaseFieldDefinitions('MYMODULE');
-      $module = $this->entityManager->getStorage('MYMODULE')->create(['type' => $type->uuid()]);
+      $form['#title'] = $this->t('Add mymodule type');
+      $fields = $this->entityManager->getBaseFieldDefinitions('mymodule');
+      $module = $this->entityManager->getStorage('mymodule')->create(['type' => $type->uuid()]);
     }
     else {
-      $form['#title'] = $this->t('Edit %label MYMODULE type', ['%label' => $type->label()]);
-      $fields = $this->entityManager->getFieldDefinitions('MYMODULE', $type->id());
+      $form['#title'] = $this->t('Edit %label mymodule type', ['%label' => $type->label()]);
+      $fields = $this->entityManager->getFieldDefinitions('mymodule', $type->id());
       // Create a node to get the current values for workflow settings fields.
-      $module = $this->entityManager->getStorage('MYMODULE')->create(['type' => $type->id()]);
+      $module = $this->entityManager->getStorage('mymodule')->create(['type' => $type->id()]);
     }
 
     $form['name'] = [
@@ -73,11 +73,11 @@ class MYMODULETypeForm extends BundleEntityFormBase {
       '#maxlength' => EntityTypeInterface::BUNDLE_MAX_LENGTH,
       '#disabled' => $type->isLocked(),
       '#machine_name' => [
-        'exists' => ['Drupal\MYMODULE\Entity\MYMODULEType', 'load'],
+        'exists' => ['Drupal\mymodule\Entity\MymoduleType', 'load'],
         'source' => ['name'],
       ],
       '#description' => t('A unique machine-readable name for this content type. It must only contain lowercase letters, numbers, and underscores. This name will be used for constructing the URL of the %MYMODULE page, in which underscores will be converted into hyphens.', [
-        '%MYMODULE' => t('Add MYMODULE'),
+        '%MYMODULE' => t('Add mymodule'),
       ]),
     ];
 
@@ -135,8 +135,8 @@ class MYMODULETypeForm extends BundleEntityFormBase {
    */
   protected function actions(array $form, FormStateInterface $form_state) {
     $actions = parent::actions($form, $form_state);
-    $actions['submit']['#value'] = t('Save MYMODULE type');
-    $actions['delete']['#value'] = t('Delete MYMODULE type');
+    $actions['submit']['#value'] = t('Save mymodule type');
+    $actions['delete']['#value'] = t('Delete mymodule type');
     return $actions;
   }
 
@@ -166,16 +166,16 @@ class MYMODULETypeForm extends BundleEntityFormBase {
     $t_args = ['%name' => $type->label()];
 
     if ($status == SAVED_UPDATED) {
-      drupal_set_message(t('The MYMODULE type %name has been updated.', $t_args));
+      drupal_set_message(t('The mymodule type %name has been updated.', $t_args));
     }
     elseif ($status == SAVED_NEW) {
-//      node_add_body_field($type);
-      drupal_set_message(t('The MYMODULE type %name has been added.', $t_args));
+      node_add_body_field($type);
+      drupal_set_message(t('The mymodule type %name has been added.', $t_args));
       $context = array_merge($t_args, ['link' => $type->link($this->t('View'), 'collection')]);
-      $this->logger('MYMODULE')->notice('Added MYMODULE type %name.', $context);
+      $this->logger('mymodule')->notice('Added mymodule type %name.', $context);
     }
 
-    $fields = $this->entityManager->getFieldDefinitions('MYMODULE', $type->id());
+    $fields = $this->entityManager->getFieldDefinitions('mymodule', $type->id());
     // Update title field definition.
     $title_field = $fields['title'];
     $title_label = $form_state->getValue('title_label');
