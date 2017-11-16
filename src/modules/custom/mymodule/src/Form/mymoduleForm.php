@@ -11,7 +11,7 @@ use Drupal\Core\Form\FormStateInterface;
  *
  * @ingroup mymodule
  */
-class mymoduleForm extends ContentEntityForm {
+class MymoduleForm extends ContentEntityForm {
 
   /**
    * {@inheritdoc}
@@ -34,7 +34,6 @@ class mymoduleForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
-//    $form_state->setRedirect('entity.content_entity_example_contact.collection');
     $entity = $this->getEntity();
     $entity->save();
   }

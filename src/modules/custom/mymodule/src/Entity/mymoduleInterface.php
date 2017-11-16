@@ -14,6 +14,6 @@ use Drupal\user\EntityOwnerInterface;
  *
  * @ingroup content_entity_example
  */
-interface mymoduleInterface extends ContentEntityInterface, RevisionLogInterface, EntityChangedInterface, EntityOwnerInterface {
+interface MymoduleInterface extends ContentEntityInterface, RevisionLogInterface, EntityChangedInterface, EntityOwnerInterface {
 
 }

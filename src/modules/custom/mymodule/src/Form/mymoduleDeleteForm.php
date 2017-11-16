@@ -11,7 +11,7 @@ use Drupal\Core\Url;
  *
  * @ingroup content_entity_example
  */
-class mymoduleDeleteForm extends ContentEntityConfirmFormBase {
+class MymoduleDeleteForm extends ContentEntityConfirmFormBase {
 
   /**
    * {@inheritdoc}

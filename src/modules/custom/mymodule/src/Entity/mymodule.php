@@ -10,7 +10,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\user\UserInterface;
 
 /**
- * Class mymodule.
+ * Class Mymodule.
  *
  * @ContentEntityType(
  *   id = "mymodule",
@@ -23,10 +23,10 @@ use Drupal\user\UserInterface;
  *     "access" = "Drupal\core\Entity\EntityAccessControlHandler",
  *     "views_data" = "Drupal\views\EntityViewsData",
  *     "form" = {
- *       "default" = "Drupal\mymodule\Form\mymoduleForm",
- *       "add" = "Drupal\mymodule\Form\mymoduleForm",
- *       "edit" = "Drupal\mymodule\Form\mymoduleForm",
- *       "delete" = "Drupal\mymodule\Form\mymoduleDeleteForm",
+ *       "default" = "Drupal\mymodule\Form\MymoduleForm",
+ *       "add" = "Drupal\mymodule\Form\MymoduleForm",
+ *       "edit" = "Drupal\mymodule\Form\MymoduleForm",
+ *       "delete" = "Drupal\mymodule\Form\MymoduleDeleteForm",
  *     },
  *   },
  *   base_table = "mymodule",
@@ -62,7 +62,7 @@ use Drupal\user\UserInterface;
  *   }
  * )
  */
-class mymodule extends RevisionableContentEntityBase implements mymoduleInterface {
+class Mymodule extends RevisionableContentEntityBase implements MymoduleInterface {
 
   use EntityChangedTrait;
 
