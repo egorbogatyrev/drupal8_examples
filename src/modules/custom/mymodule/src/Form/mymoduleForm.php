@@ -16,7 +16,6 @@ class MymoduleForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    /* @var $entity \Drupal\example\Entity\example */
     $form = parent::buildForm($form, $form_state);
 
     if (!$this->entity->isNew()) {
@@ -55,13 +54,13 @@ class MymoduleForm extends ContentEntityForm {
 
     switch ($status) {
       case SAVED_NEW:
-        drupal_set_message($this->t('Created the %label Example.', [
+        drupal_set_message($this->t('Created the %label Mymodule.', [
           '%label' => $entity->label(),
         ]));
         break;
 
       default:
-        drupal_set_message($this->t('Saved the %label Example.', [
+        drupal_set_message($this->t('Saved the %label Mymodule.', [
           '%label' => $entity->label(),
         ]));
     }

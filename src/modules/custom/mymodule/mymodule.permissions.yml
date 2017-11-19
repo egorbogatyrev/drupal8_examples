@@ -1,0 +1,30 @@
+add mymodule entities:
+  title: 'Create new Mymodule entities'
+
+administer mymodule entities:
+  title: 'Administer Mymodule entities'
+  description: 'Allow to access the administration form to configure Mymodule entities.'
+  restrict access: true
+
+delete mymodule entities:
+  title: 'Delete Mymodule entities'
+
+edit mymodule entities:
+  title: 'Edit Mymodule entities'
+
+view published mymodule entities:
+  title: 'View published Mymodule entities'
+
+view unpublished mymodule entities:
+  title: 'View unpublished Mymodule entities'
+
+view all mymodule revisions:
+  title: 'View all Mymodule revisions'
+
+revert all mymodule revisions:
+  title: 'Revert all Mymodule revisions'
+  description: 'Role requires permission <em>view Mymodule revisions</em> and <em>edit rights</em> for Mymodule entities in question or <em>administer Mymodule entities</em>.'
+
+delete all mymodule revisions:
+  title: 'Delete all revisions'
+  description: 'Role requires permission to <em>view Mymodule revisions</em> and <em>delete rights</em> for Mymodule entities in question or <em>administer Mymodule entities</em>.'

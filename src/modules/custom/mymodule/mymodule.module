@@ -1,0 +1,45 @@
+<?php
+
+use \Drupal\Core\Url;
+use \Drupal\Core\Link;
+
+/**
+ * Implements hook_theme().
+ */
+function mymodule_theme() {
+  return [
+    'mymodule_content_add_list' => [
+      'render element' => 'content',
+      'variables' => ['content' => NULL],
+//    'file' => 'example.page.inc',
+    ],
+  ];
+}
+
+
+/**
+ * Prepares variables for list of available node type templates.
+ *
+ * Default template: node-add-list.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - content: An array of content types.
+ *
+ * @see node_add_page()
+ */
+function template_preprocess_mymodule_content_add_list(&$variables) {
+  $variables['types'] = [];
+  if (!empty($variables['content'])) {
+    foreach ($variables['content'] as $type) {
+      $variables['types'][$type->id()] = [
+        'type' => $type->id(),
+        'link' => new Link($type->label(), new Url('entity.mymodule.add_form', ['mymodule_type' => $type->id()])),
+        'description' => [
+          '#markup' => '',
+//          '#markup' => $type->getDescription(),
+        ],
+      ];
+    }
+  }
+}

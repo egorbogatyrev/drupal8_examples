@@ -3,7 +3,6 @@
 namespace Drupal\mymodule\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
-use Drupal\Core\Config\Entity\ConfigEntityInterface;
 
 /**
  * Defines the Mymodule type configuration entity.
@@ -17,7 +16,7 @@ use Drupal\Core\Config\Entity\ConfigEntityInterface;
  *     "form" = {
  *       "add" = "Drupal\mymodule\Form\MymoduleTypeForm",
  *       "edit" = "Drupal\mymodule\Form\MymoduleTypeForm",
- *       "delete" = "Drupal\mymodule\Form\MymoduleTypeDeleteConfirm"
+ *       "delete" = "Drupal\mymodule\Form\MymoduleTypeDeleteForm"
  *     },
  *   },
  *   admin_permission = "administer content types",
@@ -36,27 +35,23 @@ use Drupal\Core\Config\Entity\ConfigEntityInterface;
  *     "collection" = "/admin/structure/mymodule_type"
  *   },
  *   config_export = {
- *     "name",
- *     "type",
- *     "description",
- *     "help",
- *     "new_revision",
- *     "preview_mode",
- *     "display_submitted",
+ *     "id",
+ *     "label",
+ *     "uuid"
  *   }
  * )
  */
-class MymoduleType extends ConfigEntityBundleBase implements ConfigEntityInterface {
+class MymoduleType extends ConfigEntityBundleBase implements MymoduleTypeInterface {
 
   /**
-   * The Example type ID.
+   * The Mymodule type ID.
    *
    * @var string
    */
   protected $id;
 
   /**
-   * The Example type label.
+   * The Mymodule type label.
    *
    * @var string
    */

@@ -1,0 +1,15 @@
+# mymodule menu items definition
+entity.mymodule.collection:
+  title: 'Mymodule list'
+  route_name: entity.mymodule.collection
+  description: 'List mymodule entities'
+  parent: system.admin_structure
+  weight: 100
+
+# mymodule type menu items definition
+entity.mymodule_type.collection:
+  title: 'Mymodule type'
+  route_name: entity.mymodule_type.collection
+  description: 'List mymodule type (bundles)'
+  parent: system.admin_structure
+  weight: 99

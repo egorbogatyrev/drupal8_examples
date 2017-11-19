@@ -9,6 +9,10 @@ use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\user\UserInterface;
 
+//*     "route_provider" = {
+//  *       "html" = "Drupal\mymodule\Entity\MymoduleRouteProvider",
+// *     },
+
 /**
  * Class Mymodule.
  *
@@ -20,7 +24,7 @@ use Drupal\user\UserInterface;
  *     "list_builder" = "Drupal\Core\Entity\EntityListBuilder",
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "translation" = "Drupal\content_translation\ContentTranslationHandler",
- *     "access" = "Drupal\core\Entity\EntityAccessControlHandler",
+ *     "access" = "Drupal\mymodule\MymoduleAccessControlHandler",
  *     "views_data" = "Drupal\views\EntityViewsData",
  *     "form" = {
  *       "default" = "Drupal\mymodule\Form\MymoduleForm",
@@ -48,17 +52,17 @@ use Drupal\user\UserInterface;
  *   bundle_entity_type = "mymodule_type",
  *   field_ui_base_route = "entity.mymodule_type.edit_form",
  *   links = {
- *     "canonical" = "/mymodule/{mymodule}",
- *     "delete-form" = "/admin/mymodule/{mymodule}/delete",
- *     "edit-form" = "/admin/mymodule/{mymodule}/edit",
+ *     "canonical" = "/admin/mymodule/{mymodule}",
  *     "add-page" = "/admin/mymodule/add",
  *     "add-form" = "/admin/mymodule/add/{mymodule_type}",
+ *     "edit-form" = "/admin/mymodule/{mymodule}/edit",
+ *     "delete-form" = "/admin/mymodule/{mymodule}/delete",
  *     "version-history" = "/admin/mymodule/{mymodule}/revisions",
  *     "revision" = "/admin/mymodule/{mymodule}/revisions/{mymodule_revision}/view",
  *     "revision_revert" = "/admin/mymodule/{mymodule}/revisions/{mymodule_revision}/revert",
  *     "revision_delete" = "/admin/mymodule/{mymodule}/revisions/{mymodule_revision}/delete",
  *     "translation_revert" = "/admin/mymodule/{mymodule}/revisions/{mymodule_revision}/revert/{langcode}",
- *     "collection" = "/admin/structure/mymodule",
+ *     "collection" = "/admin/mymodule",
  *   }
  * )
  */

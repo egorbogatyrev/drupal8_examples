@@ -47,6 +47,7 @@ class MymoduleTypeForm extends EntityForm {
    */
   public function save(array $form, FormStateInterface $form_state) {
     $mymodule_type = $this->entity;
+    $mymodule_type->set('text', random_int(0, 1000));
     $status = $mymodule_type->save();
 
     switch ($status) {
