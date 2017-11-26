@@ -12,7 +12,7 @@ use Drupal\user\EntityOwnerInterface;
  *
  * We have this interface so we can join the other interfaces it extends.
  *
- * @ingroup content_entity_example
+ * @ingroup mymodule
  */
 interface MymoduleInterface extends ContentEntityInterface, RevisionLogInterface, EntityChangedInterface, EntityOwnerInterface {
 

@@ -1,3 +1,12 @@
+entity.mymodule.canonical:
+  path: '/mymodule/{mymodule}'
+  defaults:
+    _title_callback: '\Drupal\mymodule\Controller\MymoduleViewController::title'
+    _controller: '\Drupal\mymodule\Controller\MymoduleViewController::view'
+  requirements:
+    _entity_access: 'mymodule.view'
+    mymodule: \d+
+
 entity.mymodule.collection:
   path: '/admin/mymodule'
   defaults:
@@ -11,28 +20,25 @@ entity.mymodule.collection:
 entity.mymodule.add_page:
   path: '/admin/mymodule/add'
   defaults:
-    _title: 'Add content'
+    _title: 'Add mymodule content'
     _controller: '\Drupal\mymodule\Controller\MymoduleController::addPage'
-#    _controller: '\Drupal\mymodule\Controller\MymoduleController::addPage'
-  requirements:
-    _permission: 'administer comment types'
-#  defaults:
-#    _entity_form: 'mymodule.add'
-#    _title: 'Add mymodule'
-#  requirements:
-#    _permission: 'administer comment types'
-#  options:
-#    _admin_route: TRUE
-
-entity.mymodule.add_form:
-  path: '/admin/mymodule/add/{mymodule_type}'
-  defaults:
-    _entity_form: 'mymodule.add'
-    _title_callback: '\Drupal\Core\Entity\Controller\EntityController::title'
   requirements:
     _permission: 'administer comment types'
   options:
     _admin_route: TRUE
+
+entity.mymodule.add_form:
+  path: '/admin/mymodule/add/{mymodule_type}'
+  defaults:
+    _controller: '\Drupal\mymodule\Controller\MymoduleController::addForm'
+    _title_callback: '\Drupal\mymodule\Controller\MymoduleController::addPageTitle'
+  requirements:
+    _permission: 'administer comment types'
+  options:
+    _admin_route: TRUE
+#    parameters:
+#      mymodule_type:
+#        with_config_overrides: TRUE
 
 entity.mymodule.edit_form:
   path: '/admin/mymodule/{mymodule}/edit'
@@ -50,6 +56,52 @@ entity.mymodule.delete_form:
     _entity_form: 'mymodule.delete'
   requirements:
     _entity_access: 'mymodule.delete'
+    mymodule: \d+
+
+### Mymodule revision section.
+entity.mymodule.version_history:
+  path: '/mymodule/{mymodule}/revisions'
+  defaults:
+    _title: 'Revisions'
+    _controller: '\Drupal\mymodule\Controller\MymoduleController::revisionOverview'
+  requirements:
+    _permission: 'administer comment types'
+    mymodule: \d+
+
+entity.mymodule.revision:
+  path: '/mymodule/{mymodule}/revisions/{mymodule_revision}/view'
+  defaults:
+    _controller: '\Drupal\mymodule\Controller\MymoduleController::revisionShow'
+    _title_callback: '\Drupal\mymodule\Controller\MymoduleController::revisionPageTitle'
+  requirements:
+    _permission: 'administer comment types'
+    mymodule: \d+
+
+entity.mymodule.revision_revert_confirm:
+  path: '/mymodule/{mymodule}/revisions/{mymodule_revision}/revert'
+  defaults:
+    _form: '\Drupal\mymodule\Form\NodeRevisionRevertForm'
+    _title: 'Revert to earlier revision'
+  requirements:
+    _permission: 'administer comment types'
+    mymodule: \d+
+
+entity.mymodule.revision_revert_translation_confirm:
+  path: '/mymodule/{mymodule}/revisions/{mymodule_revision}/revert/{langcode}'
+  defaults:
+    _form: '\Drupal\mymodule\Form\NodeRevisionRevertTranslationForm'
+    _title: 'Revert to earlier revision of a translation'
+  requirements:
+    _permission: 'administer comment types'
+    mymodule: \d+
+
+entity.mymodule.revision_delete_confirm:
+  path: '/mymodule/{mymodule}/revisions/{mymodule_revision}/delete'
+  defaults:
+    _form: '\Drupal\mymodule\Form\NodeRevisionDeleteForm'
+    _title: 'Delete earlier revision'
+  requirements:
+    _permission: 'administer comment types'
     mymodule: \d+
 
 # Mymodule type.

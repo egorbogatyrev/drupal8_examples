@@ -14,25 +14,20 @@
  * @ingroup themeable
  */
 #}
-{#{% if types is not empty %}#}
-  {#<dl>#}
-    {#{% for type in types %}#}
-      {#<dt>1321321</dt>#}
-      {#<dt>{{ type.add_link }}</dt>#}
-      {#<dd>{{ type.description }}</dd>#}
-    {#{% endfor %}#}
-  {#</dl>#}
-{#{% elseif add_bundle_message is not empty %}#}
-  {#<p>#}
-    {#{{ add_bundle_message }}#}
-  {#</p>#}
-{#{% endif %}#}
-
 {% spaceless %}
-  <dl>
-    {% for type in types %}
-      <dt>{{ type.link }}</dt>
-      <dd>{{ type.description }}</dd>
-    {% endfor %}
-  </dl>
+  {% if types is not empty %}
+    <dl>
+      {% for type in types %}
+        <dt>{{ type.add_link }}</dt>
+        {#<dd>{{ type.description }}</dd>#}
+      {% endfor %}
+    </dl>
+  {% else %}
+    <p>
+      {% set create_content = path('entity.mymodule_type.collection') %}
+      {% trans %}
+      You have not created any mymodule types yet. Go to the <a href="{{ create_content }}">mymodule type creation page</a> to add a new mymodule type.
+      {% endtrans %}
+    </p>
+  {% endif %}
 {% endspaceless %}

@@ -16,7 +16,6 @@ function mymodule_theme() {
   ];
 }
 
-
 /**
  * Prepares variables for list of available node type templates.
  *

@@ -21,7 +21,7 @@ use Drupal\user\UserInterface;
  *   label = @Translation("mymodule"),
  *   bundle_label = @Translation("mymodule type"),
  *   handlers = {
- *     "list_builder" = "Drupal\Core\Entity\EntityListBuilder",
+ *     "list_builder" = "Drupal\mymodule\MymoduleListBuilder",
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "translation" = "Drupal\content_translation\ContentTranslationHandler",
  *     "access" = "Drupal\mymodule\MymoduleAccessControlHandler",
@@ -52,7 +52,7 @@ use Drupal\user\UserInterface;
  *   bundle_entity_type = "mymodule_type",
  *   field_ui_base_route = "entity.mymodule_type.edit_form",
  *   links = {
- *     "canonical" = "/admin/mymodule/{mymodule}",
+ *     "canonical" = "/mymodule/{mymodule}",
  *     "add-page" = "/admin/mymodule/add",
  *     "add-form" = "/admin/mymodule/add/{mymodule_type}",
  *     "edit-form" = "/admin/mymodule/{mymodule}/edit",
