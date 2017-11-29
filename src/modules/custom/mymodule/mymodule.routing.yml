@@ -67,6 +67,8 @@ entity.mymodule.version_history:
   requirements:
     _permission: 'administer comment types'
     mymodule: \d+
+  options:
+    _admin_route: TRUE
 
 entity.mymodule.revision:
   path: '/mymodule/{mymodule}/revisions/{mymodule_revision}/view'

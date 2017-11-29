@@ -180,6 +180,13 @@ class Mymodule extends RevisionableContentEntityBase implements MymoduleInterfac
   /**
    * {@inheritdoc}
    */
+  public function getType() {
+    return $this->bundle();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 

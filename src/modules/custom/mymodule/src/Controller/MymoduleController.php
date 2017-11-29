@@ -183,14 +183,15 @@ class MymoduleController extends ControllerBase implements ContainerInjectionInt
       $revision = $mymodule_storage->loadRevision($vid);
       // Only show revisions that are affected by the language that is being
       // displayed.
-      if ($revision->hasTranslation($langcode) && $revision->getTranslation($langcode)->isRevisionTranslationAffected()) {
+//      if ($revision->hasTranslation($langcode) && $revision->getTranslation($langcode)->isRevisionTranslationAffected()) {
+      if ($revision->hasTranslation($langcode)) {
         $username = [
           '#theme' => 'username',
           '#account' => $revision->getRevisionUser(),
         ];
 
         // Use revision link to link to revisions that are not active.
-        $date = $this->dateFormatter->format($revision->revision_timestamp->value, 'short');
+        $date = $this->dateFormatter->format($revision->changed->value, 'short');
         if ($vid != $mymodule->getRevisionId()) {
           $link = $this->l($date, new Url('entity.mymodule.revision', ['mymodule' => $mymodule->id(), 'mymodule_revision' => $vid]));
         }
@@ -206,7 +207,7 @@ class MymoduleController extends ControllerBase implements ContainerInjectionInt
             '#context' => [
               'date' => $link,
               'username' => $this->renderer->renderPlain($username),
-              'message' => ['#markup' => $revision->revision_log->value, '#allowed_tags' => Xss::getHtmlTagList()],
+              'message' => ['#markup' => $revision->getRevisionLogMessage(), '#allowed_tags' => Xss::getHtmlTagList()],
             ],
           ],
         ];
@@ -234,15 +235,15 @@ class MymoduleController extends ControllerBase implements ContainerInjectionInt
             $links['revert'] = [
               'title' => $vid < $mymodule->getRevisionId() ? $this->t('Revert') : $this->t('Set as current revision'),
               'url' => $has_translations ?
-                Url::fromRoute('mymodule.revision_revert_translation_confirm', ['mymodule' => $mymodule->id(), 'mymodule_revision' => $vid, 'langcode' => $langcode]) :
-                Url::fromRoute('mymodule.revision_revert_confirm', ['mymodule' => $mymodule->id(), 'mymodule_revision' => $vid]),
+                Url::fromRoute('entity.mymodule.revision_revert_translation_confirm', ['mymodule' => $mymodule->id(), 'mymodule_revision' => $vid, 'langcode' => $langcode]) :
+                Url::fromRoute('entity.mymodule.revision_revert_confirm', ['mymodule' => $mymodule->id(), 'mymodule_revision' => $vid]),
             ];
           }
 
           if ($delete_permission) {
             $links['delete'] = [
               'title' => $this->t('Delete'),
-              'url' => Url::fromRoute('mymodule.revision_delete_confirm', ['mymodule' => $mymodule->id(), 'mymodule_revision' => $vid]),
+              'url' => Url::fromRoute('entity.mymodule.revision_delete_confirm', ['mymodule' => $mymodule->id(), 'mymodule_revision' => $vid]),
             ];
           }
 
