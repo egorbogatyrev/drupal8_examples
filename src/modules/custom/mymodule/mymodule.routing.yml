@@ -100,11 +100,13 @@ entity.mymodule.revision_revert_translation_confirm:
 entity.mymodule.revision_delete_confirm:
   path: '/mymodule/{mymodule}/revisions/{mymodule_revision}/delete'
   defaults:
-    _form: '\Drupal\mymodule\Form\NodeRevisionDeleteForm'
+    _form: '\Drupal\mymodule\Form\MymoduleRevisionDeleteForm'
     _title: 'Delete earlier revision'
   requirements:
     _permission: 'administer comment types'
     mymodule: \d+
+  options:
+    _admin_route: TRUE
 
 # Mymodule type.
 entity.mymodule_type.collection:

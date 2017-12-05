@@ -10,30 +10,30 @@ use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides a form for reverting a node revision.
+ * Provides a form for reverting a mymodule revision.
  */
-class NodeRevisionDeleteForm extends ConfirmFormBase {
+class MymoduleRevisionDeleteForm extends ConfirmFormBase {
 
   /**
-   * The node revision.
+   * The mymodule revision.
    *
-   * @var \Drupal\node\NodeInterface
+   * @var \Drupal\mymodule\Entity\MymoduleInterface
    */
   protected $revision;
 
   /**
-   * The node storage.
+   * The mymodule storage.
    *
    * @var \Drupal\Core\Entity\EntityStorageInterface
    */
-  protected $nodeStorage;
+  protected $mymoduleStorage;
 
   /**
-   * The node type storage.
+   * The mymodule type storage.
    *
    * @var \Drupal\Core\Entity\EntityStorageInterface
    */
-  protected $nodeTypeStorage;
+  protected $mymoduleTypeStorage;
 
   /**
    * The database connection.
@@ -43,18 +43,18 @@ class NodeRevisionDeleteForm extends ConfirmFormBase {
   protected $connection;
 
   /**
-   * Constructs a new NodeRevisionDeleteForm.
+   * Constructs a new MymoduleRevisionDeleteForm.
    *
-   * @param \Drupal\Core\Entity\EntityStorageInterface $node_storage
-   *   The node storage.
-   * @param \Drupal\Core\Entity\EntityStorageInterface $node_type_storage
-   *   The node type storage.
+   * @param \Drupal\Core\Entity\EntityStorageInterface $mymodule_storage
+   *   The mymodule storage.
+   * @param \Drupal\Core\Entity\EntityStorageInterface $mymodule_type_storage
+   *   The mymodule type storage.
    * @param \Drupal\Core\Database\Connection $connection
    *   The database connection.
    */
-  public function __construct(EntityStorageInterface $node_storage, EntityStorageInterface $node_type_storage, Connection $connection) {
-    $this->nodeStorage = $node_storage;
-    $this->nodeTypeStorage = $node_type_storage;
+  public function __construct(EntityStorageInterface $mymodule_storage, EntityStorageInterface $mymodule_type_storage, Connection $connection) {
+    $this->mymoduleStorage = $mymodule_storage;
+    $this->mymoduleTypeStorage = $mymodule_type_storage;
     $this->connection = $connection;
   }
 
@@ -64,8 +64,8 @@ class NodeRevisionDeleteForm extends ConfirmFormBase {
   public static function create(ContainerInterface $container) {
     $entity_manager = $container->get('entity.manager');
     return new static(
-      $entity_manager->getStorage('node'),
-      $entity_manager->getStorage('node_type'),
+      $entity_manager->getStorage('mymodule'),
+      $entity_manager->getStorage('mymodule_type'),
       $container->get('database')
     );
   }
@@ -74,7 +74,7 @@ class NodeRevisionDeleteForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'node_revision_delete_confirm';
+    return 'mymodule_revision_delete_confirm';
   }
 
   /**
@@ -88,7 +88,7 @@ class NodeRevisionDeleteForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function getCancelUrl() {
-    return new Url('entity.node.version_history', ['node' => $this->revision->id()]);
+    return new Url('entity.mymodule.version_history', ['mymodule' => $this->revision->id()]);
   }
 
   /**
@@ -101,8 +101,8 @@ class NodeRevisionDeleteForm extends ConfirmFormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, $node_revision = NULL) {
-    $this->revision = $this->nodeStorage->loadRevision($node_revision);
+  public function buildForm(array $form, FormStateInterface $form_state, $mymodule_revision = NULL) {
+    $this->revision = $this->mymoduleStorage->loadRevision($mymodule_revision);
     $form = parent::buildForm($form, $form_state);
 
     return $form;
@@ -112,19 +112,30 @@ class NodeRevisionDeleteForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $this->nodeStorage->deleteRevision($this->revision->getRevisionId());
+    $this->mymoduleStorage->deleteRevision($this->revision->getRevisionId());
 
-    $this->logger('content')->notice('@type: deleted %title revision %revision.', ['@type' => $this->revision->bundle(), '%title' => $this->revision->label(), '%revision' => $this->revision->getRevisionId()]);
-    $node_type = $this->nodeTypeStorage->load($this->revision->bundle())->label();
-    drupal_set_message(t('Revision from %revision-date of @type %title has been deleted.', ['%revision-date' => format_date($this->revision->getRevisionCreationTime()), '@type' => $node_type, '%title' => $this->revision->label()]));
+    $this->logger('content')->notice('@type: deleted %title revision %revision.', [
+      '@type' => $this->revision->bundle(),
+      '%title' => $this->revision->label(),
+      '%revision' => $this->revision->getRevisionId(),
+    ]);
+
+    $mymodule_type = $this->mymoduleTypeStorage->load($this->revision->bundle())->label();
+    drupal_set_message(t('Revision from %revision-date of @type %title has been deleted.', [
+      '%revision-date' => format_date($this->revision->getRevisionCreationTime()),
+      '@type' => $mymodule_type,
+      '%title' => $this->revision->label(),
+    ]));
+
     $form_state->setRedirect(
-      'entity.node.canonical',
-      ['node' => $this->revision->id()]
+      'entity.mymodule.canonical',
+      ['mymodule' => $this->revision->id()]
     );
-    if ($this->connection->query('SELECT COUNT(DISTINCT vid) FROM {node_field_revision} WHERE nid = :nid', [':nid' => $this->revision->id()])->fetchField() > 1) {
+
+    if ($this->connection->query('SELECT COUNT(DISTINCT vid) FROM {mymodule_field_revision} WHERE id = :id', [':id' => $this->revision->id()])->fetchField() > 1) {
       $form_state->setRedirect(
-        'entity.node.version_history',
-        ['node' => $this->revision->id()]
+        'entity.mymodule.version_history',
+        ['mymodule' => $this->revision->id()]
       );
     }
   }
