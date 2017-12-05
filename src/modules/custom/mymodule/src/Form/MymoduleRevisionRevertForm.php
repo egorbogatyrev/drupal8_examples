@@ -2,33 +2,33 @@
 
 namespace Drupal\mymodule\Form;
 
-use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
-use Drupal\node\NodeInterface;
+use Drupal\mymodule\Entity\MymoduleInterface;
+use Drupal\mymodule\Entity\MymoduleType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides a form for reverting a node revision.
+ * Provides a form for reverting a mymodule revision.
  */
 class MymoduleRevisionRevertForm extends ConfirmFormBase {
 
   /**
-   * The node revision.
+   * The mymodule revision.
    *
-   * @var \Drupal\node\NodeInterface
+   * @var \Drupal\mymodule\Entity\MymoduleInterface
    */
   protected $revision;
 
   /**
-   * The node storage.
+   * The mymodule storage.
    *
    * @var \Drupal\Core\Entity\EntityStorageInterface
    */
-  protected $nodeStorage;
+  protected $mymoduleStorage;
 
   /**
    * The date formatter service.
@@ -38,26 +38,16 @@ class MymoduleRevisionRevertForm extends ConfirmFormBase {
   protected $dateFormatter;
 
   /**
-   * The time service.
+   * Constructs a new MymoduleRevisionRevertForm.
    *
-   * @var \Drupal\Component\Datetime\TimeInterface
-   */
-  protected $time;
-
-  /**
-   * Constructs a new NodeRevisionRevertForm.
-   *
-   * @param \Drupal\Core\Entity\EntityStorageInterface $node_storage
-   *   The node storage.
+   * @param \Drupal\Core\Entity\EntityStorageInterface $mymodule_storage
+   *   The mymodule storage.
    * @param \Drupal\Core\Datetime\DateFormatterInterface $date_formatter
    *   The date formatter service.
-   * @param \Drupal\Component\Datetime\TimeInterface $time
-   *   The time service.
    */
-  public function __construct(EntityStorageInterface $node_storage, DateFormatterInterface $date_formatter, TimeInterface $time) {
-    $this->nodeStorage = $node_storage;
+  public function __construct(EntityStorageInterface $mymodule_storage, DateFormatterInterface $date_formatter) {
+    $this->mymoduleStorage = $mymodule_storage;
     $this->dateFormatter = $date_formatter;
-    $this->time = $time;
   }
 
   /**
@@ -65,9 +55,8 @@ class MymoduleRevisionRevertForm extends ConfirmFormBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('entity.manager')->getStorage('node'),
-      $container->get('date.formatter'),
-      $container->get('datetime.time')
+      $container->get('entity.manager')->getStorage('mymodule'),
+      $container->get('date.formatter')
     );
   }
 
@@ -75,7 +64,7 @@ class MymoduleRevisionRevertForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'node_revision_revert_confirm';
+    return 'mymodule_revision_revert_confirm';
   }
 
   /**
@@ -89,7 +78,7 @@ class MymoduleRevisionRevertForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function getCancelUrl() {
-    return new Url('entity.node.version_history', ['node' => $this->revision->id()]);
+    return new Url('entity.mymodule.version_history', ['mymodule' => $this->revision->id()]);
   }
 
   /**
@@ -109,8 +98,8 @@ class MymoduleRevisionRevertForm extends ConfirmFormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, $node_revision = NULL) {
-    $this->revision = $this->nodeStorage->loadRevision($node_revision);
+  public function buildForm(array $form, FormStateInterface $form_state, $mymodule_revision = NULL) {
+    $this->revision = $this->mymoduleStorage->loadRevision($mymodule_revision);
     $form = parent::buildForm($form, $form_state);
 
     return $form;
@@ -126,30 +115,41 @@ class MymoduleRevisionRevertForm extends ConfirmFormBase {
 
     $this->revision = $this->prepareRevertedRevision($this->revision, $form_state);
     $this->revision->revision_log = t('Copy of the revision from %date.', ['%date' => $this->dateFormatter->format($original_revision_timestamp)]);
-    $this->revision->setRevisionCreationTime($this->time->getRequestTime());
-    $this->revision->setChangedTime($this->time->getRequestTime());
+    $this->revision->setRevisionCreationTime(\Drupal::time()->getRequestTime());
+    $this->revision->setChangedTime(\Drupal::time()->getRequestTime());
     $this->revision->save();
 
-    $this->logger('content')->notice('@type: reverted %title revision %revision.', ['@type' => $this->revision->bundle(), '%title' => $this->revision->label(), '%revision' => $this->revision->getRevisionId()]);
-    drupal_set_message(t('@type %title has been reverted to the revision from %revision-date.', ['@type' => node_get_type_label($this->revision), '%title' => $this->revision->label(), '%revision-date' => $this->dateFormatter->format($original_revision_timestamp)]));
+    $this->logger('content')->notice('@type: reverted %title revision %revision.', [
+      '@type' => $this->revision->bundle(),
+      '%title' => $this->revision->label(),
+      '%revision' => $this->revision->getRevisionId(),
+    ]);
+
+    $type = MymoduleType::load($this->revision->bundle());
+    drupal_set_message(t('@type %title has been reverted to the revision from %revision-date.', [
+      '@type' => $type ? $type->label() : FALSE,
+      '%title' => $this->revision->label(),
+      '%revision-date' => $this->dateFormatter->format($original_revision_timestamp),
+    ]));
+
     $form_state->setRedirect(
-      'entity.node.version_history',
-      ['node' => $this->revision->id()]
+      'entity.mymodule.version_history',
+      ['mymodule' => $this->revision->id()]
     );
   }
 
   /**
    * Prepares a revision to be reverted.
    *
-   * @param \Drupal\node\NodeInterface $revision
+   * @param \Drupal\mymodule\Entity\MymoduleInterface $revision
    *   The revision to be reverted.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The current state of the form.
    *
-   * @return \Drupal\node\NodeInterface
+   * @return \Drupal\mymodule\Entity\MymoduleInterface
    *   The prepared revision ready to be stored.
    */
-  protected function prepareRevertedRevision(NodeInterface $revision, FormStateInterface $form_state) {
+  protected function prepareRevertedRevision(MymoduleInterface $revision, FormStateInterface $form_state) {
     $revision->setNewRevision();
     $revision->isDefaultRevision(TRUE);
 

@@ -82,11 +82,13 @@ entity.mymodule.revision:
 entity.mymodule.revision_revert_confirm:
   path: '/mymodule/{mymodule}/revisions/{mymodule_revision}/revert'
   defaults:
-    _form: '\Drupal\mymodule\Form\NodeRevisionRevertForm'
+    _form: '\Drupal\mymodule\Form\MymoduleRevisionRevertForm'
     _title: 'Revert to earlier revision'
   requirements:
     _permission: 'administer comment types'
     mymodule: \d+
+  options:
+    _admin_route: TRUE
 
 entity.mymodule.revision_revert_translation_confirm:
   path: '/mymodule/{mymodule}/revisions/{mymodule_revision}/revert/{langcode}'
