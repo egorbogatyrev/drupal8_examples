@@ -148,7 +148,7 @@ class MymoduleController extends ControllerBase implements ContainerInjectionInt
   /**
    * Generates an overview table of older revisions of a mymodule.
    *
-   * @param \Drupal\mymodule\Entity\mymoduleInterface $mymodule
+   * @param \Drupal\mymodule\Entity\MymoduleInterface $mymodule
    *   A mymodule object.
    *
    * @return mixed
@@ -186,13 +186,7 @@ class MymoduleController extends ControllerBase implements ContainerInjectionInt
         // Use revision link to link to revisions that are not active.
         $date = $this->dateFormatter->format($revision->getRevisionCreationTime(), 'short');
         if ($vid != $mymodule->getRevisionId()) {
-          $link = Link::fromTextAndUrl(
-            $date,
-            Url::fromRoute('entity.mymodule.revision', ['mymodule' => $mymodule->id(), 'mymodule_revision' => $vid])
-          );
-//          $link = Link::fromTextAndUrl($date, new Url('entity.mymodule.revision', ['mymodule' => $mymodule->id(), 'mymodule_revision' => $vid]));
-//          $link = new Link($date, new Url('entity.mymodule.revision', ['mymodule' => $mymodule->id(), 'mymodule_revision' => $vid]));
-          $link = $this->l($date, new Url('entity.mymodule.revision', ['mymodule' => $mymodule->id(), 'mymodule_revision' => $vid]));
+          $link = Link::fromTextAndUrl($date, new Url('entity.mymodule.revision', ['mymodule' => $mymodule->id(), 'mymodule_revision' => $vid]));
         }
         else {
           $link = $mymodule->toLink($date);
@@ -204,7 +198,7 @@ class MymoduleController extends ControllerBase implements ContainerInjectionInt
             '#type' => 'inline_template',
             '#template' => '{% trans %}{{ date }} by {{ username }}{% endtrans %}{% if message %}<p class="revision-log">{{ message }}</p>{% endif %}',
             '#context' => [
-              'date' => $link,
+              'date' => $link->toString(),
               'username' => $this->renderer->renderPlain($username),
               'message' => ['#markup' => $revision->getRevisionLogMessage(), '#allowed_tags' => Xss::getHtmlTagList()],
             ],
@@ -231,11 +225,19 @@ class MymoduleController extends ControllerBase implements ContainerInjectionInt
         else {
           $links = [];
           if ($revert_permission) {
+
+            // Get properly revert url.
+            $route_parameters = ['mymodule' => $mymodule->id(), 'mymodule_revision' => $vid];
+            if ($has_translations) {
+              $revert_url = Url::fromRoute('entity.mymodule.revision_revert_translation_confirm', $route_parameters + ['langcode' => $langcode]);
+            }
+            else {
+              $revert_url = Url::fromRoute('entity.mymodule.revision_revert_confirm', $route_parameters);
+            }
+
             $links['revert'] = [
               'title' => $vid < $mymodule->getRevisionId() ? $this->t('Revert') : $this->t('Set as current revision'),
-              'url' => $has_translations ?
-                Url::fromRoute('entity.mymodule.revision_revert_translation_confirm', ['mymodule' => $mymodule->id(), 'mymodule_revision' => $vid, 'langcode' => $langcode]) :
-                Url::fromRoute('entity.mymodule.revision_revert_confirm', ['mymodule' => $mymodule->id(), 'mymodule_revision' => $vid]),
+              'url' => $revert_url,
             ];
           }
 
