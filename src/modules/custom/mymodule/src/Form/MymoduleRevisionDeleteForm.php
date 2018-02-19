@@ -122,7 +122,7 @@ class MymoduleRevisionDeleteForm extends ConfirmFormBase {
 
     $mymodule_type = $this->mymoduleTypeStorage->load($this->revision->bundle())->label();
     drupal_set_message(t('Revision from %revision-date of @type %title has been deleted.', [
-      '%revision-date' => format_date($this->revision->getRevisionCreationTime()),
+      '%revision-date' => \Drupal::service('date.formatter')->format($this->revision->getRevisionCreationTime()),
       '@type' => $mymodule_type,
       '%title' => $this->revision->label(),
     ]));
@@ -132,7 +132,13 @@ class MymoduleRevisionDeleteForm extends ConfirmFormBase {
       ['mymodule' => $this->revision->id()]
     );
 
-    if ($this->connection->query('SELECT COUNT(DISTINCT vid) FROM {mymodule_field_revision} WHERE id = :id', [':id' => $this->revision->id()])->fetchField() > 1) {
+    // Select revisions from DB.
+    $query = $this->connection->select('mymodule_field_revision', 't');
+    $query->addExpression('COUNT(DISTINCT t.vid)');
+    $query->condition('t.id', $this->revision->id());
+
+    // If revisions more than 1 user will be redirected to version history page.
+    if ($query->execute()->fetchField() > 1) {
       $form_state->setRedirect(
         'entity.mymodule.version_history',
         ['mymodule' => $this->revision->id()]
