@@ -8,6 +8,7 @@ use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Entity\Controller\EntityViewController;
 use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Link;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Url;
 use Drupal\mymodule\Entity\MymoduleTypeInterface;
@@ -114,11 +115,6 @@ class MymoduleController extends ControllerBase implements ContainerInjectionInt
     return $form;
   }
 
-
-
-
-
-
   /**
    * Displays a mymodule revision.
    *
@@ -130,10 +126,8 @@ class MymoduleController extends ControllerBase implements ContainerInjectionInt
    */
   public function revisionShow($mymodule_revision) {
     $mymodule = static::entityTypeManager()->getStorage('mymodule')->loadRevision($mymodule_revision);
-    $mymodule = static::entityTypeManager()->getTranslationFromContext($mymodule);
-    $mymodule_view_controller = new EntityViewController($this->entityManager, $this->renderer, $this->currentUser());
+    $mymodule_view_controller = new MymoduleViewController(\Drupal::service('entity.manager'), $this->renderer, $this->currentUser());
     $page = $mymodule_view_controller->view($mymodule);
-    unset($page['mymodules'][$mymodule->id()]['#cache']);
     return $page;
   }
 
@@ -154,10 +148,10 @@ class MymoduleController extends ControllerBase implements ContainerInjectionInt
   /**
    * Generates an overview table of older revisions of a mymodule.
    *
-   * @param \Drupal\mymodule\Entity\MymoduleTypeInterface $mymodule
+   * @param \Drupal\mymodule\Entity\mymoduleInterface $mymodule
    *   A mymodule object.
    *
-   * @return array
+   * @return mixed
    *   An array as expected by drupal_render().
    */
   public function revisionOverview(MymoduleInterface $mymodule) {
@@ -181,22 +175,27 @@ class MymoduleController extends ControllerBase implements ContainerInjectionInt
     foreach ($this->getRevisionIds($mymodule, $mymodule_storage) as $vid) {
       /** @var \Drupal\mymodule\Entity\MymoduleTypeInterface $revision */
       $revision = $mymodule_storage->loadRevision($vid);
-      // Only show revisions that are affected by the language that is being
-      // displayed.
-//      if ($revision->hasTranslation($langcode) && $revision->getTranslation($langcode)->isRevisionTranslationAffected()) {
-      if ($revision->hasTranslation($langcode)) {
+      // Only show revisions that are affected by
+      // the language that is being displayed.
+      if ($revision->hasTranslation($langcode) && $revision->getTranslation($langcode)->isRevisionTranslationAffected()) {
         $username = [
           '#theme' => 'username',
           '#account' => $revision->getRevisionUser(),
         ];
 
         // Use revision link to link to revisions that are not active.
-        $date = $this->dateFormatter->format($revision->changed->value, 'short');
+        $date = $this->dateFormatter->format($revision->getRevisionCreationTime(), 'short');
         if ($vid != $mymodule->getRevisionId()) {
+          $link = Link::fromTextAndUrl(
+            $date,
+            Url::fromRoute('entity.mymodule.revision', ['mymodule' => $mymodule->id(), 'mymodule_revision' => $vid])
+          );
+//          $link = Link::fromTextAndUrl($date, new Url('entity.mymodule.revision', ['mymodule' => $mymodule->id(), 'mymodule_revision' => $vid]));
+//          $link = new Link($date, new Url('entity.mymodule.revision', ['mymodule' => $mymodule->id(), 'mymodule_revision' => $vid]));
           $link = $this->l($date, new Url('entity.mymodule.revision', ['mymodule' => $mymodule->id(), 'mymodule_revision' => $vid]));
         }
         else {
-          $link = $mymodule->link($date);
+          $link = $mymodule->toLink($date);
         }
 
         $row = [];
@@ -290,15 +289,14 @@ class MymoduleController extends ControllerBase implements ContainerInjectionInt
   /**
    * Gets a list of mymodule revision IDs for a specific mymodule.
    *
-   * @param \Drupal\mymodule\Entity\MymoduleTypeInterface $mymodule
+   * @param \Drupal\mymodule\Entity\MymoduleInterface $mymodule
    *   The mymodule entity.
    * @param \Drupal\Core\Entity\EntityStorageInterface $mymodule_storage
    *   The mymodule storage handler.
    *
-   * @return int[]
-   *   mymodule revision IDs (in descending order).
+   * @return array
    */
-  protected function getRevisionIds(mymoduleInterface $mymodule, EntityStorageInterface $mymodule_storage) {
+  protected function getRevisionIds(MymoduleInterface $mymodule, EntityStorageInterface $mymodule_storage) {
     $result = $mymodule_storage->getQuery()
       ->allRevisions()
       ->condition($mymodule->getEntityType()->getKey('id'), $mymodule->id())
